@@ -24,7 +24,7 @@ module.exports = {
     {name: "💄 界面(UI):              UI 调整 | UI 更新", value: "💄 UI", emoji: "💄"},
     {name: "📸 图片(image):           图片", value: "📸 image", emoji: "📸"},
     {name: "🔊 日志(add_log):         添加日志 | 日志", value: "🔊 add_log", emoji: "🔊"},
-    {name: "🔖 日志(rem_log):         移除日志 | 日志", value: "🔖 rm_log", emoji: "🔖"},
+    {name: "🔇 日志(rem_log):         移除日志 | 日志", value: "🔇 rm_log", emoji: "🔇"},
     {name: "➕ 依赖(add_dep):         添加依赖", value: "➕ add_dep", emoji: "➕"},
     {name: "➖ 依赖(rem_dep):         移除依赖", value: "➖ rm_dep", emoji: "➖"},
     {name: "🗑️ 文件(rem_file):         删除文件", value: "🗑️ remFile", emoji: "🗑️"},
@@ -32,7 +32,7 @@ module.exports = {
     {name: "🔀 合并(merge):           合并分支 | 合并", value: "🔀 merge", emoji: "🔀"},
     {name: "💩 优化(poop):            写了一些屎一样待优化的代码", value: "💩 poop", emoji: "💩"},
     {name: "🚧 工作(wip):             正在开发中", value: "🚧 wip", emoji: "wip"},
-    {name: "🏹 发布(release):         发布", value: '🏹release', emoji: '🏹'},
+    {name: "🏹 发布(release):         发布", value: '🏹 release', emoji: '🏹'},
     {name: "🛠️ 其他(chore):           对构建过程或辅助工具和库的更改（不影响源文件、测试用例）", value: "🛠️ chore", emoji: "🛠️"}
   ],
   // scope 类型（定义之后，可通过上下键选择）
