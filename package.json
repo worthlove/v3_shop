@@ -1,0 +1,56 @@
+{
+  "name": "v3_shop",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview",
+    "commit": "git add . && git-cz",
+    "prepare": "husky install",
+    "commitlint": "commitlint --config commitlint.config.cjs -e -V"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-customizable"
+    },
+    "cz-customizable": {
+      "config": ".cz-config.cjs"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "dependencies": {
+    "@vue/shared": "^3.5.12",
+    "axios": "^1.7.7",
+    "dayjs": "^1.11.13",
+    "echarts": "^5.5.1",
+    "element-plus": "^2.8.7",
+    "less": "^4.2.0",
+    "less-loader": "^12.2.0",
+    "lottie-web": "^5.12.2",
+    "nprogress": "^0.2.0",
+    "pinia": "^2.2.5",
+    "pinia-plugin-persistedstate": "^4.1.2",
+    "speak-tts": "^2.0.8",
+    "vue": "^3.5.12",
+    "vue-router": "^4.4.5"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
+    "@types/nprogress": "^0.2.3",
+    "@vitejs/plugin-vue": "^5.1.4",
+    "commitizen": "^4.3.1",
+    "cz-customizable": "^7.2.1",
+    "git-cz": "^4.9.0",
+    "husky": "^8.0.0",
+    "typescript": "~5.6.2",
+    "vite": "^5.4.10",
+    "vue-tsc": "^2.1.8"
+  }
+}
