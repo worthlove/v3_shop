@@ -1,7 +1,9 @@
 module.exports = {
   disableEmoji: false,
   format: '{type}{scope}: {emoji}{subject}',
-  // list: [],
+  list: [
+    '🎉 init', '✨ feat', '🐛 fix', '📝 docs', '🎨 style', '💄 UI', '📸 image', '🔊 add_log', '🔖 rm_log', '➕ add_dep', '➖ rm_dep', '🗑️ remFile', '🚚 move', '🔀 merge', '💩 poop', '🚧 wip', '👷 ci', '📦️ build', '🙈 ignore', '💡 comment:', '🔄 refactor', '🚀 perf', '✅ test', '↩️ revert', '🏹release', '🛠 chore'
+  ],
   maxMessageLength: 64,
   minMessageLength: 3,
   questions: ['type', 'scope', 'subject', 'body', 'breaking', 'issues', 'lerna'],
