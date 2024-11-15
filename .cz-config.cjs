@@ -10,30 +10,38 @@ module.exports = {
   types: [
     {name: "🎉 开始(init):            项目初始化", value: "🎉 init", emoji: "🎉"},
     {name: "✨ 特性(feat):            新增功能", value: "✨ feat", emoji: "✨"},
-    {name: "🐛 修复(fix):             修复缺陷", value: "🐛 fix", emoji: "🐛"},
+    {name: "🐛 修复(fix):              修复缺陷", value: "🐛 fix", emoji: "🐛"},
     {name: "📝 文档(docs):            文档变更", value: "📝 docs", emoji: "📝"},
     {name: "🎨 格式(style):           代码格式（不影响功能，例如空格、分号等格式修正）", value: "🎨 style", emoji: "🎨"},
     {name: "👷 集成(CI):              修改 CI 配置、脚本", value: "👷 ci", emoji: "👷"},
-    {name: "📦️ 构建(build):           构建流程、外部依赖变更（如升级 npm 包、修改 vite 配置等）", value: "📦️ build", emoji: "📦️"},
+    {
+      name: "📦️ 构建(build):           构建流程、外部依赖变更（如升级 npm 包、修改 vite 配置等）",
+      value: "📦️ build",
+      emoji: "📦️"
+    },
     {name: "🙈 忽略(ignore):          忽略文件 | 忽略", value: "🙈 ignore", emoji: "🙈"},
     {name: "💡 注释(comment):         注释说明", value: "💡 comment:", emoji: "💡"},
     {name: "🔄 重构(refactor):        代码重构（不包括 bug 修复、功能新增）", value: "🔄 refactor", emoji: "🔄"},
     {name: "🚀 性能(perf):            性能优化", value: "🚀 perf", emoji: "🚀"},
     {name: "✅ 测试(test):            添加疏漏测试或已有测试改动", value: "✅ test", emoji: "✅"},
-    {name: "↩️ 回退(revert):           回滚 commit", value: "↩️ revert", emoji: "↩️"},
+    {name: "↩️ 回退(revert):          回滚 commit", value: "↩️ revert", emoji: "↩️"},
     {name: "💄 界面(UI):              UI 调整 | UI 更新", value: "💄 UI", emoji: "💄"},
     {name: "📸 图片(image):           图片", value: "📸 image", emoji: "📸"},
     {name: "🔊 日志(add_log):         添加日志 | 日志", value: "🔊 add_log", emoji: "🔊"},
     {name: "🔇 日志(rem_log):         移除日志 | 日志", value: "🔇 rm_log", emoji: "🔇"},
     {name: "➕ 依赖(add_dep):         添加依赖", value: "➕ add_dep", emoji: "➕"},
     {name: "➖ 依赖(rem_dep):         移除依赖", value: "➖ rm_dep", emoji: "➖"},
-    {name: "🗑️ 文件(rem_file):        删除文件", value: "🗑️ remFile", emoji: "🗑️"},
-    {name: "🚚 移动(move_file):       移动文件 | 移动", value: "🚚 move", emoji: "🚚"},
+    {name: "🗑️ 文件(rem_file):         删除文件", value: "🗑️ remFile", emoji: "🗑️"},
+    {name: "🚚 移动(move_file):        移动文件 | 移动", value: "🚚 move", emoji: "🚚"},
     {name: "🔀 合并(merge):           合并分支 | 合并", value: "🔀 merge", emoji: "🔀"},
     {name: "💩 优化(poop):            写了一些屎一样待优化的代码", value: "💩 poop", emoji: "💩"},
     {name: "🚧 工作(wip):             正在开发中", value: "🚧 wip", emoji: "wip"},
     {name: "🏹 发布(release):         发布", value: '🏹 release', emoji: '🏹'},
-    {name: "🛠️ 其他(chore):           对构建过程或辅助工具和库的更改（不影响源文件、测试用例）", value: "🛠️ chore", emoji: "🛠️"}
+    {
+      name: "🛠️ 其他(chore):           对构建过程或辅助工具和库的更改（不影响源文件、测试用例）",
+      value: "🛠️ chore",
+      emoji: "🛠️"
+    }
   ],
   // scope 类型（定义之后，可通过上下键选择）
   // // 定义一个包含提交范围选项的数组
