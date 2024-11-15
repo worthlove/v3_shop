@@ -8,3 +8,10 @@ export function loginApi(params: Object) {
   })
   
 }
+
+export function getMenuListApi() {
+  return request({
+    method: 'get',
+    url: '/menus',
+  })
+}

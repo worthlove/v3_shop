@@ -10,6 +10,10 @@ import ElementPlusPlugin from '@/plugins/element-plus'
 // element icons
 import * as Icons from "@element-plus/icons-vue";
 
+import '@/assets/icons/loginIcon/iconfont.css'
+import '@/assets/icons/menuIcon/iconfont.css'
+
+// 注册图标
 Object.keys(Icons).forEach(key => {
   app.component(key, Icons[key as keyof typeof Icons]);
 });

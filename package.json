@@ -25,17 +25,18 @@
     }
   },
   "dependencies": {
+    "@element-plus/icons-vue": "^2.3.1",
     "@vue/shared": "^3.5.12",
     "axios": "^1.7.7",
     "dayjs": "^1.11.13",
     "echarts": "^5.5.1",
     "element-plus": "^2.8.7",
-    "less": "^4.2.0",
-    "less-loader": "^12.2.0",
     "lottie-web": "^5.12.2",
     "nprogress": "^0.2.0",
     "pinia": "^2.2.5",
-    "pinia-plugin-persistedstate": "^4.1.2",
+    "pinia-plugin-persistedstate": "^3.2.1",
+    "scss": "^0.2.4",
+    "scss-loader": "^0.0.1",
     "speak-tts": "^2.0.8",
     "vue": "^3.5.12",
     "vue-router": "^4.4.5"

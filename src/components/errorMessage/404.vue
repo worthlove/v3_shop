@@ -10,7 +10,7 @@
   </div>
 </template>
 
-<script lang="ts" name="404" setup>
+<script lang="ts" setup>
 import {useRouter} from "vue-router";
 import lottie from "lottie-web";
 import lottie404 from "@/assets/lottie_json/404错误.json";
@@ -44,6 +44,6 @@ onMounted(() => {
 })
 </script>
 
-<style lang="less" scoped>
-@import "@/components/errorMessage/index.less";
+<style lang="scss" scoped>
+@import "@/components/errorMessage/index.scss";
 </style>

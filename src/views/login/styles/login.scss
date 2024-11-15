@@ -44,7 +44,7 @@ form {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  padding: 0rem 5rem;
+  padding: 0 5rem;
   transition: all 0.2s 0.7s;
   overflow: hidden;
   grid-column: 1 / 2;
@@ -60,10 +60,6 @@ form.sign-in-form {
   z-index: 2;
 }
 
-form.sign-in-form-switch {
-  z-index: 2;
-}
-
 .title {
   font-size: 2.2rem;
   font-weight: bold;
@@ -72,11 +68,11 @@ form.sign-in-form-switch {
 }
 
 .input-field {
-  max-width: 380px;
+  //max-width: 380px;
   width: 100%;
   background-color: #f0f0f0;
   margin: 10px 0;
-  height: 55px;
+  height: 40px;
   border-radius: 55px;
   display: grid;
   grid-template-columns: 15% 85%;
@@ -86,7 +82,7 @@ form.sign-in-form-switch {
 
 .input-field i {
   text-align: center;
-  line-height: 55px;
+  line-height: 40px;
   color: #acacac;
   transition: 0.5s;
   font-size: 1.1rem;
@@ -263,11 +259,6 @@ form.sign-in-form-switch {
   z-index: 1;
 }
 
-.container.sign-up-mode form.sign-in-form-switch {
-  opacity: 0;
-  z-index: 1;
-}
-
 .container.sign-up-mode .right-panel .image,
 .container.sign-up-mode .right-panel .content {
   transform: translateX(0%);
@@ -427,13 +418,13 @@ form.sign-in-form-switch {
   }
 
   .g_input_search {
-    padding: 0 15px;
+    //padding: 0 15px;
     height: 100%;
     width: 100%;
     box-sizing: border-box;
 
     &:not(:placeholder-shown) {
-      border: 1px solid #03a9f4;
+      border: 0 solid #03a9f4;
 
       + .g_button_search {
         opacity: 1;

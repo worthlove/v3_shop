@@ -1,16 +1,14 @@
 module.exports = {
   disableEmoji: false,
   format: '{type}{scope}: {emoji}{subject}',
-  list: [
-    '🎉 init', '✨ feat', '🐛 fix', '📝 docs', '🎨 style', '💄 UI', '📸 image', '🔊 add_log', '🔖 rm_log', '➕ add_dep', '➖ rm_dep', '🗑️ remFile', '🚚 move', '🔀 merge', '💩 poop', '🚧 wip', '👷 ci', '📦️ build', '🙈 ignore', '💡 comment:', '🔄 refactor', '🚀 perf', '✅ test', '↩️ revert', '🏹release', '🛠 chore'
-  ],
+  // list: [],
   maxMessageLength: 64,
   minMessageLength: 3,
   questions: ['type', 'scope', 'subject', 'body', 'breaking', 'issues', 'lerna'],
   types: [
     {name: "🎉 开始(init):            项目初始化", value: "🎉 init", emoji: "🎉"},
     {name: "✨ 特性(feat):            新增功能", value: "✨ feat", emoji: "✨"},
-    {name: "🐛 修复(fix):              修复缺陷", value: "🐛 fix", emoji: "🐛"},
+    {name: "🐛 修复(fix):             修复缺陷", value: "🐛 fix", emoji: "🐛"},
     {name: "📝 文档(docs):            文档变更", value: "📝 docs", emoji: "📝"},
     {name: "🎨 格式(style):           代码格式（不影响功能，例如空格、分号等格式修正）", value: "🎨 style", emoji: "🎨"},
     {name: "👷 集成(CI):              修改 CI 配置、脚本", value: "👷 ci", emoji: "👷"},
@@ -20,15 +18,15 @@ module.exports = {
     {name: "🔄 重构(refactor):        代码重构（不包括 bug 修复、功能新增）", value: "🔄 refactor", emoji: "🔄"},
     {name: "🚀 性能(perf):            性能优化", value: "🚀 perf", emoji: "🚀"},
     {name: "✅ 测试(test):            添加疏漏测试或已有测试改动", value: "✅ test", emoji: "✅"},
-    {name: "↩️ 回退(revert):          回滚 commit", value: "↩️ revert", emoji: "↩️"},
+    {name: "↩️ 回退(revert):           回滚 commit", value: "↩️ revert", emoji: "↩️"},
     {name: "💄 界面(UI):              UI 调整 | UI 更新", value: "💄 UI", emoji: "💄"},
     {name: "📸 图片(image):           图片", value: "📸 image", emoji: "📸"},
     {name: "🔊 日志(add_log):         添加日志 | 日志", value: "🔊 add_log", emoji: "🔊"},
     {name: "🔇 日志(rem_log):         移除日志 | 日志", value: "🔇 rm_log", emoji: "🔇"},
     {name: "➕ 依赖(add_dep):         添加依赖", value: "➕ add_dep", emoji: "➕"},
     {name: "➖ 依赖(rem_dep):         移除依赖", value: "➖ rm_dep", emoji: "➖"},
-    {name: "🗑️ 文件(rem_file):         删除文件", value: "🗑️ remFile", emoji: "🗑️"},
-    {name: "🚚 移动(move_file):        移动文件 | 移动", value: "🚚 move", emoji: "🚚"},
+    {name: "🗑️ 文件(rem_file):        删除文件", value: "🗑️ remFile", emoji: "🗑️"},
+    {name: "🚚 移动(move_file):       移动文件 | 移动", value: "🚚 move", emoji: "🚚"},
     {name: "🔀 合并(merge):           合并分支 | 合并", value: "🔀 merge", emoji: "🔀"},
     {name: "💩 优化(poop):            写了一些屎一样待优化的代码", value: "💩 poop", emoji: "💩"},
     {name: "🚧 工作(wip):             正在开发中", value: "🚧 wip", emoji: "wip"},
@@ -66,7 +64,7 @@ module.exports = {
     ["other", "其他修改"],
     
     // 自定义范围选项，如果选择此项，用户需要输入自定义的 scope
-    // ["custom", "以上都不是？我要自定义"]
+    ["custom", "以上都不是？我要自定义"]
   ].map(([value, description]) => {
     return {
       value,

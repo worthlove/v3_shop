@@ -3,7 +3,9 @@ import NProgress from '@/config/nprogress';
 import 'nprogress/nprogress.css'
 import {ErrorCodeType} from "@/utils/error-code-type";
 import {ElMessage} from 'element-plus'
+import {useUserInfoStore} from "@/store/modules/userinfo.ts";
 
+const userInfoStore = useUserInfoStore();
 const service = axios.create({
   baseURL: 'http://127.0.0.1:8888/api/private/v1/',
   timeout: 300 * 1000, // 请求超时时间设置为300秒
@@ -15,7 +17,7 @@ service.interceptors.request.use((config) => {
   console.log('请求拦截器 =>', config)
   /* 将存储在sessionStorage中的token令牌存入config.headers.Authorization中 */
 // 从 sessionStorage 中获取 token，并设置到请求头的 Authorization 字段
-  config.headers.Authorization = window.sessionStorage.getItem('token')
+  config.headers.Authorization = userInfoStore.token;
 //   config.headers.Authorization = ().token;
 // 开启进度条
   NProgress.start();

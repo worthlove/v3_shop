@@ -2,33 +2,98 @@
   <div class="container">
     <div class="forms-container">
       <div class="signin-signup">
-        <form action="#" class="sign-in-form">
-          <h2 class="title">Sign in</h2>
-          <div class="input-field g-container">
-            <i class="fas fa-user"></i>
-            <input placeholder="Username" type="text" class="g_input_search"/>
-          </div>
-          <div class="input-field g-container">
-            <i class="fas fa-lock"></i>
-            <input placeholder="Password" type="password" class="g_input_search"/>
-          </div>
-          <input class="btn solid" type="submit" value="Sign In"/>
+        <form action="#" class="loginBox sign-in-form">
+          <el-card class="card" style="max-width: 480px">
+            <template #header>
+              <div class="card-header" style="text-align: center">
+                <span style="font: bold 200% Consolas, Monaco, monospace;font-weight: 500;">Sgin In</span>
+              </div>
+            </template>
+            <div class="card-body">
+              <el-form ref="formRef" :model="form" :rules="rules" style="align-items: normal;padding: 0">
+                <el-row>
+                  <el-col :span="24">
+                    <el-form-item class="input-field g-container" prop="name">
+                      <el-input v-model="form.name" class="g_input_search" placeholder="Username">
+                        <template #prefix>
+                          <i class="iconfont">&#xe622;</i>
+                        </template>
+                      </el-input>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="24">
+                    <el-form-item class="input-field g-container" prop="password">
+                      <el-input v-model="form.password" class="g_input_search" placeholder="Password">
+                        <template #prefix>
+                          <i class="iconfont">&#xe62a;</i>
+                        </template>
+                      </el-input>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+              </el-form>
+            </div>
+            <template #footer>
+              <el-row justify="space-evenly">
+                <el-col :span="8">
+                  <el-button round size="large" style="width:100%;padding:8px 15px" type="primary" @click="loginFn">
+                    Login
+                  </el-button>
+                </el-col>
+                <el-col :span="8">
+                  <el-button round size="large" style="width:100%;padding:8px 15px" type="info">Reset</el-button>
+                </el-col>
+              </el-row>
+            </template>
+          </el-card>
         </form>
-        <form action="#" class="sign-up-form">
-          <h2 class="title">Sign up</h2>
-          <div class="input-field g-container">
-            <i class="fas fa-user"></i>
-            <input placeholder="Username" type="text" class="g_input_search"/>
-          </div>
-          <div class="input-field g-container">
-            <i class="fas fa-envelope"></i>
-            <input placeholder="Email" type="email" class="g_input_search"/>
-          </div>
-          <div class="input-field g-container">
-            <i class="fas fa-lock"></i>
-            <input placeholder="Password" type="password" class="g_input_search"/>
-          </div>
-          <input class="btn" type="submit" value="Sign up"/>
+
+        <form action="#" class="sign-up-form loginBox">
+          <el-card class="card" style="max-width: 480px">
+            <template #header>
+              <div class="card-header" style="text-align: center">
+                <span style="font: bold 200% Consolas, Monaco, monospace;font-weight: 500;">Sgin Up</span>
+              </div>
+            </template>
+            <div class="card-body">
+              <el-row>
+                <el-col :span="24">
+                  <el-form :model="form" class="input-field g-container">
+                    <el-input v-model="form.name" class="g_input_search" placeholder="Username">
+                      <template #prefix>
+                        <i class="iconfont">&#xe622;</i>
+                      </template>
+                    </el-input>
+                  </el-form>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="24">
+                  <el-form :model="form" class="input-field g-container">
+                    <el-input v-model="form.password" class="g_input_search" placeholder="Password">
+                      <template #prefix>
+                        <i class="iconfont">&#xe62a;</i>
+                      </template>
+                    </el-input>
+                  </el-form>
+                </el-col>
+              </el-row>
+            </div>
+            <template #footer>
+              <el-row justify="space-evenly">
+                <el-col :span="8">
+                  <el-button round size="large" style="width:100%;padding:8px 15px" type="primary" @click="RegisterFn">
+                    Register
+                  </el-button>
+                </el-col>
+                <el-col :span="8">
+                  <el-button round size="large" style="width:100%;padding:8px 15px" type="info">Reset</el-button>
+                </el-col>
+              </el-row>
+            </template>
+          </el-card>
         </form>
       </div>
     </div>
@@ -70,17 +135,23 @@
 <script lang="ts" setup>
 
 import BrightAndDark from "@/components/switch/brightAndDark.vue";
-import {onMounted, ref} from 'vue';
+import {onMounted, ref, reactive} from 'vue';
 
 // 导入 Lottie 动画库
 import lottie from "lottie-web"
 // 导入 Lottie 动画 JSON 文件
 import lottieWoMan from "@/assets/lottie_json/办公女.json"
 import lottieMan from "@/assets/lottie_json/办公男.json"
+import {loginApi} from "@/api/loginApi/loginApi.ts";
+import {ElNotification} from "element-plus";
+import {useUserInfoStore} from "@/store/modules/userinfo.ts";
+import router from "@/router";
 
 const sign_in_btn = ref<HTMLButtonElement | null>(null);
 const sign_up_btn = ref<HTMLButtonElement | null>(null);
 const container = ref<HTMLDivElement | null>(null);
+
+const userInfoStore = useUserInfoStore();
 
 // 定义两个变量，用于存储 Lottie 动画实例
 let animation_lottieMan, animation_lottieWoMan;
@@ -145,12 +216,191 @@ onMounted(() => {
   }
 });
 
+const form = reactive({
+  name: 'admin',
+  password: '123456'
+});
+
+const formRef = ref(null);
+
+const rules = {
+  name: [
+    {required: true, message: '请输入用户名', trigger: 'blur'}
+  ],
+  password: [
+    {required: true, message: '请输入密码', trigger: 'blur'},
+    {min: 6, max: 12, message: '密码长度在 6 到 12 个字符', trigger: 'blur'}
+  ]
+};
+
+// 登录
+const loginFn = () => {
+  if (!formRef.value) {
+    ElNotification.error('表单未初始化');
+    return;
+  }
+  formRef.value.validate((valid: any) => {
+    if (valid) {
+      loginApi({username: 'admin', password: '123456'}).then(res => {
+        if (res.meta.status !== 200) {
+          ElNotification.error('登陆失败！')
+        } else {
+          ElNotification.success('登陆成功！')
+          userInfoStore.setToken(res.data.token);
+          // 跳转路由
+          router.push('/home');
+        }
+      })
+    } else {
+      ElNotification.error('请输入正确的用户名和密码')
+    }
+  })
+};
+
+// 注册
+const RegisterFn = () => {
+}
+
+// 更换主题
 const changeTheme = (activeState: boolean) => {
-  activeState = activeState ? false : true;
+  activeState = !activeState;
+  console.log("changeTheme", activeState);
 };
 </script>
 
 
-<style lang="less" scoped>
-@import "@/views/login/styles/login.less";
+<style lang="scss" scoped>
+@import "@/views/login/styles/login.scss";
+
+.loginBox {
+  width: 450px;
+  height: 300px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-image: linear-gradient(163deg, #00ff75 0%, #3700ff 100%);
+  border-radius: 20px;
+
+  &:hover {
+    box-shadow: 0 0 30px 1px rgba(0, 255, 117, 0.30);
+  }
+}
+
+.card {
+  width: 450px;
+  height: 300px;
+  background-color: #fff;
+  border-radius: 20px;
+
+  &:hover {
+    transform: scale(0.98);
+    border-radius: 20px;
+  }
+}
+
+:deep(.el-input__wrapper) {
+  background: #F2F3F5;
+  box-shadow: none;
+  border-radius: 55px;
+}
+
+:deep(.el-input__inner) {
+  background: #F2F3F5;
+  box-shadow: none;
+  font-weight: 600;
+  transition: 0.5s;
+  font-size: 1.1rem;
+  color: #acacac;
+}
+
+:deep(.el-card__footer) {
+  border-top: none !important;
+  padding: 0 !important;
+}
+
+//设置背景图片无缝平滑效果
+//.forms-container {
+//  width: 100%;
+//  height: 100%;
+//  display: flex;
+//  background: url('@/assets/images/full-fire-cloud.jpg') repeat-x 0 center/auto 100%;
+//  animation: smooth 10s linear infinite;
+//  animation-play-state: running;
+//}
+///* main:hover, main:focus {
+//  animation-play-state: running;
+//} */
+//@keyframes smooth {
+//  to {
+//    background-position: 1970px center;
+//  }
+//}
+
+// 3d csemszepp
+.forms-container {
+  width: 100%;
+  height: 100%;
+  --s: 200px; /* control the size */
+  --c1: #1d1d1d;
+  --c2: #4e4f51;
+  --c3: #3c3c3c;
+
+  background: repeating-conic-gradient(from 30deg,
+      #0000 0 120deg,
+      var(--c3) 0 180deg) calc(0.5 * var(--s)) calc(0.5 * var(--s) * 0.577),
+  repeating-conic-gradient(from 30deg,
+          var(--c1) 0 60deg,
+          var(--c2) 0 120deg,
+          var(--c3) 0 180deg);
+  background-size: var(--s) calc(var(--s) * 0.577);
+}
+
+/* From Uiverse.io by kandalgaonkarshubham */
+//.forms-container {
+//  width: 100%;
+//  height: 100%;
+//  background: radial-gradient(
+//          circle farthest-side at 0% 50%,
+//          #282828 23.5%,
+//          rgba(255, 170, 0, 0) 0
+//  ) 21px 30px,
+//  radial-gradient(
+//          circle farthest-side at 0% 50%,
+//          #a1000e 24%,
+//          rgba(240, 166, 17, 0) 0
+//  ) 19px 30px,
+//  linear-gradient(
+//          #282828 14%,
+//          rgba(240, 166, 17, 0) 0,
+//          rgba(240, 166, 17, 0) 85%,
+//          #282828 0
+//  ) 0 0,
+//  linear-gradient(
+//          150deg,
+//          #282828 24%,
+//          #a1000e 0,
+//          #a1000e 26%,
+//          rgba(240, 166, 17, 0) 0,
+//          rgba(240, 166, 17, 0) 74%,
+//          #a1000e 0,
+//          #a1000e 76%,
+//          #282828 0
+//  ) 0 0,
+//  linear-gradient(
+//          30deg,
+//          #282828 24%,
+//          #a1000e 0,
+//          #a1000e 26%,
+//          rgba(240, 166, 17, 0) 0,
+//          rgba(240, 166, 17, 0) 74%,
+//          #a1000e 0,
+//          #a1000e 76%,
+//          #282828 0
+//  ) 0 0,
+//  linear-gradient(90deg, #a1000e 2%, #282828 0, #282828 98%, #a1000e 0%) 0 0 #282828;
+//  background-size: 40px 60px;
+//}
+
+
 </style>

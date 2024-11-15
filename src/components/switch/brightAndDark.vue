@@ -21,13 +21,13 @@ emit('changeTheme', activeState);
                 <span class="halo halo3"></span>
             </span>
             <span class="clouds">
-                <span v-for="(item, index) in 7" :key="index" :class="'cloud' + (index + 1)" class="cloud"></span>
+                <span v-for="(index) in 7" :key="index" :class="'cloud' + (index + 1)" class="cloud"></span>
             </span>
             <span class="clouds clouds2">
-                <span v-for="(item, index) in 7" :key="index" :class="'cloud' + (index + 1)" class="cloud"></span>
+                <span v-for="(index) in 7" :key="index" :class="'cloud' + (index + 1)" class="cloud"></span>
             </span>
             <span class="stars">
-                <span v-for="(item, index) in 8" :key="index" :class="'star' + index" class="star">
+                <span v-for="(index) in 8" :key="index" :class="'star' + index" class="star">
                     <svg class="icon" height="200" style="width: 100%; height: 100%" viewBox="0 0 1024 1024"
                          width="200">
                         <path d="M1004.1 512L692 332 512 19.9 332 332 19.9 512 332 692l180 312.1L692 692z"
@@ -38,11 +38,11 @@ emit('changeTheme', activeState);
         </span>
     </span>
 </template>
-<style lang="less" scoped>
-@btnW: 60px;
-@btnH: 30px;
-@paddingL: 6px;
-@time: 0.6s;
+<style lang="scss" scoped>
+$btnW: 60px;
+$btnH: 30px;
+$paddingL: 6px;
+$time: 0.6s;
 
 .button {
   display: inline-block;
@@ -51,12 +51,12 @@ emit('changeTheme', activeState);
 }
 
 .btn-inner {
-  transition: all @time ease-in-out;
+  transition: all $time ease-in-out;
   line-height: 0;
   display: inline-block;
   position: relative;
-  height: @btnH;
-  width: @btnW;
+  height: $btnH;
+  width: $btnW;
   border-radius: 100px;
   background: #1c80da;
   box-shadow: inset 0 2px 6px #000, 0 0 3px rgba(0, 0, 0, 0.6);
@@ -64,20 +64,20 @@ emit('changeTheme', activeState);
 }
 
 .circle {
-  transition: all @time ease-in-out;
+  transition: all $time ease-in-out;
   position: absolute;
   z-index: 2;
   overflow: hidden;
-  width: @btnH - @paddingL - @paddingL;
-  height: @btnH - @paddingL - @paddingL;
-  top: @paddingL;
-  left: @paddingL;
+  width: $btnH - $paddingL - $paddingL;
+  height: $btnH - $paddingL - $paddingL;
+  top: $paddingL;
+  left: $paddingL;
   background: #ffdd08;
   border-radius: 100px;
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.6), inset -0.5px -1px 3px rgba(0, 0, 0, 0.6), inset 1px 1px 3px rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.6), inset -0.5px -1px 3px rgba(0, 0, 0, 0.6), inset 1px 1px 3px rgba(255, 255, 255, 0.8);
 
   .circle-night {
-    transition: all @time ease-in-out;
+    transition: all $time ease-in-out;
     position: absolute;
     top: 0;
     left: 101%;
@@ -85,7 +85,7 @@ emit('changeTheme', activeState);
     height: 100%;
     border-radius: 100px;
     background: #c7d0da;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.6), inset -0.5px -1px 2px rgba(0, 0, 0, 0.6), inset 1px 1px 2px rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.6), inset -0.5px -1px 2px rgba(0, 0, 0, 0.6), inset 1px 1px 2px rgba(255, 255, 255, 0.8);
   }
 
   .crater {
@@ -114,19 +114,19 @@ emit('changeTheme', activeState);
 }
 
 .halo-box {
-  transition: all @time ease-in-out;
+  transition: all $time ease-in-out;
   position: absolute;
   z-index: 1;
   width: 0;
   height: 0;
 
-  left: calc(@btnH / 2);
-  top: calc(@btnH / 2);
+  left: calc($btnH / 2);
+  top: calc($btnH / 2);
 
   .halo {
-    transition: all @time ease-in-out;
-    width: @btnH * 1.4;
-    height: @btnH * 1.4;
+    transition: all $time ease-in-out;
+    width: $btnH * 1.4;
+    height: $btnH * 1.4;
     position: absolute;
     background: #fff;
     opacity: 0.1;
@@ -136,19 +136,19 @@ emit('changeTheme', activeState);
     transform: translate(-50%, -50%);
 
     &.halo2 {
-      width: @btnH * 1.4 + 25;
-      height: @btnH * 1.4 + 25;
+      width: $btnH * 1.4 + 25;
+      height: $btnH * 1.4 + 25;
     }
 
     &.halo3 {
-      width: @btnH * 1.4 + 50;
-      height: @btnH * 1.4 + 50;
+      width: $btnH * 1.4 + 50;
+      height: $btnH * 1.4 + 50;
     }
   }
 }
 
 .clouds {
-  transition: all @time ease-in-out;
+  transition: all $time ease-in-out;
   position: absolute;
   top: 0;
   left: 0;
@@ -158,7 +158,7 @@ emit('changeTheme', activeState);
   transition-delay: 0s;
 
   &.clouds2 {
-    transition-delay: @time * 0.2;
+    transition-delay: $time * 0.2;
     top: 19%;
     left: -5%;
     opacity: 1;
@@ -179,49 +179,49 @@ emit('changeTheme', activeState);
     position: absolute;
     background: #fff;
     border-radius: 100px;
-    width: @btnH * 0.9;
-    height: @btnH * 0.9;
+    width: $btnH * 0.9;
+    height: $btnH * 0.9;
     top: -17%;
     left: 84%;
 
     &.cloud2 {
-      width: @btnH * 0.68;
-      height: @btnH * 0.68;
+      width: $btnH * 0.68;
+      height: $btnH * 0.68;
       top: 39%;
       left: 69%;
     }
 
     &.cloud3 {
-      width: @btnH * 0.73;
-      height: @btnH * 0.73;
+      width: $btnH * 0.73;
+      height: $btnH * 0.73;
       top: 47%;
       left: 54%;
     }
 
     &.cloud4 {
-      width: @btnH * 0.2;
-      height: @btnH * 0.2;
+      width: $btnH * 0.2;
+      height: $btnH * 0.2;
       top: 64%;
       left: 49.7%;
     }
 
     &.cloud5 {
-      width: @btnH * 0.57;
-      height: @btnH * 0.57;
+      width: $btnH * 0.57;
+      height: $btnH * 0.57;
       top: 64%;
       left: 32%;
     }
 
     &.cloud6 {
-      width: @btnH * 0.73;
-      height: @btnH * 0.73;
+      width: $btnH * 0.73;
+      height: $btnH * 0.73;
       top: 81%;
       left: 13%;
     }
 
     &.cloud7 {
-      width: @btnH * 0.45;
-      height: @btnH * 0.45;
+      width: $btnH * 0.45;
+      height: $btnH * 0.45;
       top: 85%;
       left: 7%;
     }
@@ -229,7 +229,7 @@ emit('changeTheme', activeState);
 }
 
 .stars {
-  transition: all @time ease-in-out;
+  transition: all $time ease-in-out;
   position: absolute;
   top: -100%;
   left: 0;
@@ -237,7 +237,7 @@ emit('changeTheme', activeState);
   height: 100%;
 
   .star {
-    transition: all @time ease-in-out;
+    transition: all $time ease-in-out;
     transform: translateY(-20px) scale(0);
     display: inline-block;
     position: absolute;
@@ -316,7 +316,7 @@ emit('changeTheme', activeState);
   }
 
   .circle {
-    left: @btnW - @btnH + @paddingL;
+    left: $btnW - $btnH + $paddingL;
 
     .circle-night {
       left: 0;
@@ -324,7 +324,7 @@ emit('changeTheme', activeState);
   }
 
   .halo-box {
-    left: calc(@btnW - @btnH / 2);
+    left: calc($btnW - $btnH / 2);
 
     .halo {
       opacity: 0.13;
@@ -333,7 +333,7 @@ emit('changeTheme', activeState);
 
   .clouds {
     top: 100%;
-    transition-delay: @time * 0.2;
+    transition-delay: $time * 0.2;
 
     &.clouds2 {
       transition-delay: 0s;

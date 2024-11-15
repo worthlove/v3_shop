@@ -1,21 +1,20 @@
 // 导入 defineConfig 函数，用于定义 Vite 配置
-import { defineConfig } from 'vite';
+import {defineConfig} from 'vite';
 // 导入 vue 插件，用于支持 Vue 单文件组件
 import vue from '@vitejs/plugin-vue';
 // 导入 path 模块，用于处理路径
-import { resolve } from 'path';
+import {resolve} from 'path';
 
 // 导入 package.json 文件，用于获取项目信息
 import pkg from './package.json';
-
-// 从 package.json 文件中获取项目的名称、版本、依赖和开发依赖
-const { dependencies, devDependencies, name, version } = pkg;
 // 导入 dayjs 模块，用于处理日期时间
 import dayjs from "dayjs";
 
+// 从 package.json 文件中获取项目的名称、版本、依赖和开发依赖
+const {dependencies, devDependencies, name, version} = pkg;
 // 最后一次打包时间
 const __APP_INFO__ = {
-  pkg: { dependencies, devDependencies, name, version },
+  pkg: {dependencies, devDependencies, name, version},
   lastBuildTime: dayjs().format("YYYY-MM-DD HH:mm:ss")
 };
 
@@ -24,8 +23,9 @@ const __APP_INFO__ = {
  * @type {import('vite').UserConfig}
  */
 export default defineConfig({
-  // 配置插件，这里使用 vue 插件来支持 Vue 单文件组件
-  plugins: [vue()],
+  plugins: [
+    vue(),
+  ],
   optimizeDeps: {
     exclude: ['@vue/shared'],
   },
@@ -35,7 +35,7 @@ export default defineConfig({
   resolve: {
     alias: {
       // 将 @ 符号映射到 src 目录
-      '@': resolve(__dirname,'src'),
+      '@': resolve(__dirname, 'src'),
       // 将 assets 映射到 src/assets 目录
       '@assets': resolve(__dirname, './src/assets'),
       // 将 modules 映射到 src/modules 目录
@@ -62,6 +62,13 @@ export default defineConfig({
       '@filters': resolve(__dirname, './src/filters'),
       // 将 mixins 映射到 src/mixins 目录
       '@mixins': resolve(__dirname, './src/mixins'),
+      // 将 config 映射到 src/config 目录
+      '@config': resolve(__dirname, './src/config'),
+      // 将 global 映射到 src/global 目录
+      '@global': resolve(__dirname, './src/global'),
+      // 将 lang 映射到 src/lang 目录
+      '@lang': resolve(__dirname, './src/lang'),
+      // 将 services 映射到 src/services 目录
     },
   },
   define: {
@@ -72,7 +79,7 @@ export default defineConfig({
   // 配置服务器选项，这里配置了端口号和代理
   server: {
     // 配置服务器端口号，默认为 3000
-    port: 8080,
+    // port: 8090,
     // 配置代理，用于将请求转发到其他服务器
     proxy: {
       // 配置代理，用于将请求转发到其他服务器
