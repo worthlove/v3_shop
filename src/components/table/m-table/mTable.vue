@@ -72,8 +72,8 @@
               <div v-html="item.xhtml(scope.row)"/>
             </template>
 
-            <template v-else-if="item.render">
-                  {{ item.render(scope.row) }}
+            <template v-else-if="item.jsx">
+                  {{ item.jsx(scope.row) }}
             </template>
 
             <template v-else>
