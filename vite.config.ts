@@ -4,6 +4,8 @@ import {defineConfig} from 'vite';
 import vue from '@vitejs/plugin-vue';
 // 导入 path 模块，用于处理路径
 import {resolve} from 'path';
+// 导入 vue-jsx 插件，用于支持 JSX
+import vueJsx from '@vitejs/plugin-vue-jsx';
 
 // 导入 package.json 文件，用于获取项目信息
 import pkg from './package.json';
@@ -25,6 +27,12 @@ const __APP_INFO__ = {
 export default defineConfig({
   plugins: [
     vue(),
+    vueJsx({
+      // 配置选项
+      // include: [/\.[jt]sx$/],
+      // 启用 Babel 的 JSX 转换
+      // babelPlugins: ['@vue/babel-plugin-jsx']
+    }),
   ],
   optimizeDeps: {
     exclude: ['@vue/shared'],

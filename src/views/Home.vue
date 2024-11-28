@@ -29,13 +29,13 @@
                    text-color='#fff'>
             <el-sub-menu v-for='item in menuList' :key='item.id' :index="item.id.toString()">
               <template #title>
-                <i :class="iconsObj[item.id]"></i>
+                <i :class="iconsObj[item.id]"></i>&nbsp;
                 <span>{{ item.authName }}</span>
               </template>
               <el-menu-item v-for='subItem in item.children' :key='subItem.id' :index="'/' + subItem.path"
                             @click="saveNavStatusFn('/' + subItem.path)">
                 <template #title>
-                  <i :class='iconsObj[item.id]'></i>
+                  <i :class='iconsObj[item.id]'></i>&nbsp;
                   <span>{{ subItem.authName }}</span>
                 </template>
               </el-menu-item>
@@ -46,7 +46,7 @@
           <el-main class="mainClass">
             <router-view></router-view>
           </el-main>
-          <el-footer class="footer"> GZF ©2024 - {{ new Date().getFullYear() }} Study Cases</el-footer>
+          <!--<el-footer class="footer"> GZF ©2024 - {{ new Date().getFullYear() }} Study Cases</el-footer>-->
         </el-container>
       </el-container>
     </el-container>
@@ -124,7 +124,6 @@ const changeTheme = (activeState: boolean) => {
 .el-container {
   height: calc(100vh - 60px);
   width: 100vw;
-  background-color: #5cbaa5;
 }
 
 .header {
@@ -184,24 +183,15 @@ const changeTheme = (activeState: boolean) => {
 
 .content .el-main {
   width: 100%;
-  height: 100%;
-  background-color: #4d84e2;
+  padding: 1rem;
   //background-image: url('@/assets/16.jpg');
   background-size: 100% 100%;
+  height: 100%; /* 假设顶部有一个100px高的工具栏 */
+  overflow-y: auto; /* 开启滚动 */
+  position: relative; /* 相对定位 */
+  background-color: #63a9ee
 }
 
-.footer {
-  background-color: #0361ec;
-  height: 60px;
-  line-height: 60px;
-  text-align: center;
-  color: #fff;
-}
-
-.content.el-card__body,
-.el-main {
-  padding: 0;
-}
 
 .content.iconfont {
   margin-right: 10px;
@@ -210,9 +200,5 @@ const changeTheme = (activeState: boolean) => {
 
 .el-menu--horizontal {
   --el-menu-horizontal-height: 100%;
-}
-
-.mainClass {
-  padding: 1rem;
 }
 </style>

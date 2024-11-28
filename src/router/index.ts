@@ -67,12 +67,17 @@ const routes: ReadonlyArray<RouteRecordRaw> = [
     name: 'Home',
     // component: () => import("@/test/ScrollTest.vue"),
     component: () => import("@/views/Home.vue"),
-    redirect: '/welcome',
+    redirect: '/userList',
     children: [
       {
         path: '/welcome',
         meta: {title: '欢迎页面'},
         component: () => import('@/views/welcome/index.vue')
+      },
+      {
+        path: '/userList',
+        meta: {title: '用户列表'},
+        component: () => import('@/views/userList/index.vue')
       },
       // ...errorRouter
     ] // 添加 children 属性，即使它现在是空的
@@ -108,7 +113,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   console.log('Navigating from:', from.path);
   console.log('Navigating to:', to.path);
-  const userInfoStore = useUserInfoStore();  // 登录页面 放行
+  const userInfoStore = useUserInfoStore();// 登录页面 放行
   if (to.path === '/login') {
     return next()
   } else {

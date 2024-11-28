@@ -1,7 +1,8 @@
 <template>
-  <div style="width:100%;height:10000px">
+  <div style="width:100%">
     <!-- 定义一个返回顶部的按钮，当点击时调用 scrollToTop 方法 -->
-    <div :style="{ top: showBackToTop? '-200px' : '-999px' }" class="back-to-top cd-top faa-float animated cd-is-visible"
+    <div :style="{ top: showBackToTop? '-200px' : '-999px' }"
+         class="back-to-top cd-top faa-float animated cd-is-visible"
          @click="scrollToTop">123123
     </div>
   </div>
