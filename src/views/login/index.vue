@@ -13,8 +13,8 @@
               <el-form ref="formRef" :model="form" :rules="rules" style="align-items: normal;padding: 0">
                 <el-row>
                   <el-col :span="24">
-                    <el-form-item class="input-field g-container" prop="name">
-                      <el-input v-model="form.name" class="g_input_search" placeholder="Username">
+                    <el-form-item class="input-field g-container" prop="username">
+                      <el-input v-model="form.username" class="g_input_search" placeholder="Username">
                         <template #prefix>
                           <i class="iconfont">&#xe622;</i>
                         </template>
@@ -61,7 +61,7 @@
               <el-row>
                 <el-col :span="24">
                   <el-form :model="form" class="input-field g-container">
-                    <el-input v-model="form.name" class="g_input_search" placeholder="Username">
+                    <el-input v-model="form.username" class="g_input_search" placeholder="Username">
                       <template #prefix>
                         <i class="iconfont">&#xe622;</i>
                       </template>
@@ -142,7 +142,7 @@ import lottie from "lottie-web"
 // 导入 Lottie 动画 JSON 文件
 import lottieWoMan from "@/assets/lottie_json/办公女.json"
 import lottieMan from "@/assets/lottie_json/办公男.json"
-import {loginApi} from "@/api/loginApi/loginApi.ts";
+import {index} from "@/api/loginApi";
 import {ElNotification} from "element-plus";
 import {useUserInfoStore} from "@/store/modules/userinfo.ts";
 import router from "@/router";
@@ -204,6 +204,8 @@ onMounted(() => {
     });
   }
 
+  console.warn("location.href", location.href);
+
   // 检查当前 URL 是否包含 #reloaded 片段
   if (location.href.indexOf("#reloaded") == -1) {
     // 如果不包含，将 #reloaded 附加到当前 URL 上
@@ -216,15 +218,15 @@ onMounted(() => {
   }
 });
 
-const form = reactive({
-  name: 'admin',
+const form = ref({
+  username: 'admin',
   password: '123456'
 });
 
 const formRef = ref(null);
 
 const rules = {
-  name: [
+  username: [
     {required: true, message: '请输入用户名', trigger: 'blur'}
   ],
   password: [
@@ -241,7 +243,7 @@ const loginFn = () => {
   }
   formRef.value.validate((valid: any) => {
     if (valid) {
-      loginApi({username: 'admin', password: '123456'}).then(res => {
+      index(form.value).then(res => {
         if (res.meta.status !== 200) {
           ElNotification.error('登陆失败！')
         } else {
@@ -341,7 +343,8 @@ const changeTheme = (activeState: boolean) => {
 .forms-container {
   width: 100%;
   height: 100%;
-  --s: 200px; /* control the size */
+  --s: 200px;
+  /* control the size */
   --c1: #1d1d1d;
   --c2: #4e4f51;
   --c3: #3c3c3c;
@@ -400,7 +403,4 @@ const changeTheme = (activeState: boolean) => {
 //  ) 0 0,
 //  linear-gradient(90deg, #a1000e 2%, #282828 0, #282828 98%, #a1000e 0%) 0 0 #282828;
 //  background-size: 40px 60px;
-//}
-
-
-</style>
+//}</style>

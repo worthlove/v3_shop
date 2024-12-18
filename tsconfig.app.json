@@ -11,6 +11,8 @@
       "DOM",
       "DOM.Iterable"
     ],
+    "jsxFactory": "h",
+    "jsxFragmentFactory": "Fragment",
     "skipLibCheck": true,
     /* Bundler mode */
     "moduleResolution": "Bundler",

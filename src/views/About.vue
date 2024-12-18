@@ -15,11 +15,11 @@
     </footer>
   </div>
 </template>
-<script setup lang="ts">
-import { useRouter } from 'vue-router';
-import { useUserInfoStore } from '@/store/modules/userinfo.ts';
-import { loginApi } from '@/api/loginApi/loginApi';
-import { ElNotification } from "element-plus";
+<script lang="ts" setup>
+import {useRouter} from 'vue-router';
+import {useUserInfoStore} from '@/store/modules/userinfo.ts';
+import {index} from '@/api/loginApi';
+import {ElNotification} from "element-plus";
 
 const router = useRouter();
 const userInfoStore = useUserInfoStore();
@@ -33,7 +33,7 @@ const goToOtherPage = () => {
     username: 'admin',
     password: '123456'
   }
-  loginApi(params).then(res=> {
+  index(params).then(res => {
     if (res.meta.status !== 200) {
       ElNotification.error(res.meta.msg)
     } else {

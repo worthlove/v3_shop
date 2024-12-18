@@ -1,6 +1,6 @@
 import request from "@/utils/request.ts";
 
-export function loginApi(params: Object) {
+export function index(params: Object) {
   return request({
     method: 'post',
     url: '/login',

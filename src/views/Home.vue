@@ -57,7 +57,7 @@
 import {ref, onMounted} from "vue";
 import {useUserInfoStore} from "@/store/modules/userinfo.ts";
 import router from "@/router/index.ts";
-import {getMenuListApi} from "@/api/loginApi/loginApi.ts";
+import {getMenuListApi} from "@/api/loginApi";
 import BrightAndDark from "@/components/switch/brightAndDark.vue";
 
 const isCollapse = ref(false);

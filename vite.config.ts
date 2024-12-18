@@ -27,12 +27,7 @@ const __APP_INFO__ = {
 export default defineConfig({
   plugins: [
     vue(),
-    vueJsx({
-      // 配置选项
-      // include: [/\.[jt]sx$/],
-      // 启用 Babel 的 JSX 转换
-      // babelPlugins: ['@vue/babel-plugin-jsx']
-    }),
+    vueJsx(),
   ],
   optimizeDeps: {
     exclude: ['@vue/shared'],

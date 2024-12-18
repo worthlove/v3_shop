@@ -25,29 +25,22 @@ export const errorRouter = [
     meta: {title: "500页面"}
   },
   // Resolve refresh page, route warnings
-  {
-    path: "/:pathMatch(.*)*",
-    component: () => import("@/components/errorMessage/404.vue")
-  }
+  // {
+  //   path: "/:pathMatch(.*)*",
+  //   component: () => import("@/components/errorMessage/404.vue")
+  // }
 ];
 
-/**
- * @description 📚 路由参数配置简介
- * @param path ==> 路由菜单访问路径
- * @param name ==> 路由 name (对应页面组件 name, 可用作 KeepAlive 缓存标识 && 按钮权限筛选)
- * @param redirect ==> 路由重定向地址
- * @param component ==> 视图文件路径
- * @param meta ==> 路由菜单元信息
- * @param meta.icon ==> 菜单和面包屑对应的图标
- * @param meta.title ==> 路由标题 (用作 document.title || 菜单的名称)
- * @param meta.activeMenu ==> 当前路由为详情页时，需要高亮的菜单
- * @param meta.isLink ==> 路由外链时填写的访问地址
- * @param meta.isHide ==> 是否在菜单中隐藏 (通常列表详情页需要隐藏)
- * @param meta.isFull ==> 菜单是否全屏 (示例：数据大屏页面)
- * @param meta.isAffix ==> 菜单是否固定在标签页中 (首页通常是固定项)
- * @param meta.isKeepAlive ==> 当前路由是否缓存
- * */
 
+/**
+ * 定义路由配置
+ * @param path: 路由路径
+ * @param name: 路由名称
+ * @param component: 路由组件
+ * @param redirect: 路由重定向
+ * @param meta: 路由元信息
+ * @param children: 子路由
+ * */
 const routes: ReadonlyArray<RouteRecordRaw> = [
   {
     path: '/',
@@ -67,7 +60,7 @@ const routes: ReadonlyArray<RouteRecordRaw> = [
     name: 'Home',
     // component: () => import("@/test/ScrollTest.vue"),
     component: () => import("@/views/Home.vue"),
-    redirect: '/userList',
+    redirect: '/welcome',
     children: [
       {
         path: '/welcome',
@@ -75,9 +68,14 @@ const routes: ReadonlyArray<RouteRecordRaw> = [
         component: () => import('@/views/welcome/index.vue')
       },
       {
-        path: '/userList',
+        path: '/users',
         meta: {title: '用户列表'},
         component: () => import('@/views/userList/index.vue')
+      },
+      {
+        path: '/roles',
+        meta: {title: '角色列表'},
+        component: () => import('@/views/authority/index.vue')
       },
       // ...errorRouter
     ] // 添加 children 属性，即使它现在是空的
@@ -117,12 +115,51 @@ router.beforeEach((to, from, next) => {
   if (to.path === '/login') {
     return next()
   } else {
-    /* 如果 tokens 不存在, 页面强制跳转登陆页面 */
-    // 必须携带token
     if (!userInfoStore.token) {
       return next('/login')
     } else {
-      next()
+
+// 使用 Array.map() 方法提取 routes 数组中每个 RouteRecordRaw 对象的 children 数组中的 path 属性
+      const childrenPathArray: string[] = routes.map(route => route.path)
+
+// 使用 Array.map() 方法提取 /home 路由的 children 数组中的 path 属性
+      const homeChildrenPaths: string[] = routes.find(route => route.path === '/home')?.children.map(child => child.path) || [];
+
+// 打印 homeChildrenPaths 数组，查看提取的 path 值
+      console.log(homeChildrenPaths, 'homeChildrenPaths');
+
+// 打印 childrenPathArray 数组，查看提取的 path 值
+      console.log(childrenPathArray, 'childrenPathArray');
+      
+      const mergedArray: string[] = childrenPathArray.concat(homeChildrenPaths);
+
+// 打印合并后的数组，查看结果
+      console.log(mergedArray, 'mergedArray');
+      
+      /**
+       * 从数组中移除重复项
+       * @param arr - 要处理的数组
+       * @returns 一个新数组，其中包含原数组中的所有唯一元素
+       */
+      function removeDuplicates(arr: any[]): any[] {
+        // 使用 filter 方法遍历数组中的每个元素
+        return arr.filter((value, index, self) => {
+          // 检查当前元素在数组中第一次出现的位置是否与当前索引相同
+          return self.indexOf(value) === index;
+        });
+      }
+      
+      const mergedArray2: string[] = removeDuplicates(mergedArray);
+      
+      console.log(mergedArray2, 'mergedArray2');
+      
+      if (to.path === '/') {
+        return next('/login')
+      } else if (mergedArray2.includes(to.path)) {
+        return next();
+      } else {
+        return next('/login');
+      }
     }
   }
 });
