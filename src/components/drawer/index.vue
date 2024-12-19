@@ -1,6 +1,7 @@
 <template>
   <div>
-    <el-drawer v-model="drawer" :close-on-click-modal=false :close-on-press-escape=false :direction="direction" :size="size"
+    <el-drawer v-model="drawer" :close-on-click-modal=false :close-on-press-escape=false :direction="direction"
+               :size="size"
                :title="title" custom-class="custom-drawer">
       <el-card class="drawer-card">
         <slot name="DrawerBody"></slot>
@@ -14,7 +15,6 @@
 </template>
 
 <script setup>
-import {ref} from "vue"
 
 const drawer = ref(false)
 

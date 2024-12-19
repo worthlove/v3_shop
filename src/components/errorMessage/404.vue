@@ -11,10 +11,8 @@
 </template>
 
 <script lang="ts" setup>
-import {useRouter} from "vue-router";
 import lottie from "lottie-web";
 import lottie404 from "@/assets/lottie_json/404错误.json";
-import {onMounted} from "vue";
 
 const router = useRouter();
 

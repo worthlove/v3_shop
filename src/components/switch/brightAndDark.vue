@@ -1,6 +1,4 @@
 <script setup>
-import {ref} from "vue";
-
 const activeState = ref(false);
 const emit = defineEmits(['changeTheme']);
 emit('changeTheme', activeState);

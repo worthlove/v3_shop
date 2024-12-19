@@ -1,18 +1,19 @@
 <template>
   <!-- 列设置 -->
-  <el-drawer v-model="drawerVisible" title="列设置" size="450px">
+  <el-drawer v-model="drawerVisible" size="450px" title="列设置">
     <div class="table-main">
-      <el-table :data="colSetting" :border="true" row-key="prop" default-expand-all :tree-props="{ children: '_children' }">
-        <el-table-column prop="label" align="center" label="列名" />
-        <el-table-column v-slot="scope" prop="isShow" align="center" label="显示">
+      <el-table :border="true" :data="colSetting" :tree-props="{ children: '_children' }" default-expand-all
+                row-key="prop">
+        <el-table-column align="center" label="列名" prop="label"/>
+        <el-table-column v-slot="scope" align="center" label="显示" prop="isShow">
           <el-switch v-model="scope.row.isShow"></el-switch>
         </el-table-column>
-        <el-table-column v-slot="scope" prop="sortable" align="center" label="排序">
+        <el-table-column v-slot="scope" align="center" label="排序" prop="sortable">
           <el-switch v-model="scope.row.sortable"></el-switch>
         </el-table-column>
         <template #empty>
           <div class="table-empty">
-            <img src="@/assets/images/notData.png" alt="notData" />
+            <img alt="notData" src="@/assets/images/notData.png"/>
             <div>暂无可配置列</div>
           </div>
         </template>
@@ -21,9 +22,8 @@
   </el-drawer>
 </template>
 
-<script setup lang="ts" name="ColSetting">
-import { ref } from "vue";
-import { ColumnProps } from "@/components/ProTable/interface";
+<script lang="ts" setup>
+import {ColumnProps} from "../interface";
 
 defineProps<{ colSetting: ColumnProps[] }>();
 
@@ -38,7 +38,7 @@ defineExpose({
 });
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .cursor-move {
   cursor: move;
 }

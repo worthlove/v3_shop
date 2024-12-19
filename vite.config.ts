@@ -7,6 +7,8 @@ import {resolve} from 'path';
 // 导入 vue-jsx 插件，用于支持 JSX
 import vueJsx from '@vitejs/plugin-vue-jsx';
 
+import AutoImport from 'unplugin-auto-import/vite'
+
 // 导入 package.json 文件，用于获取项目信息
 import pkg from './package.json';
 // 导入 dayjs 模块，用于处理日期时间
@@ -28,6 +30,16 @@ export default defineConfig({
   plugins: [
     vue(),
     vueJsx(),
+    AutoImport({
+      imports: ['vue', 'vue-router'],
+      dts: './auto-imports.d.ts',
+      vueTemplate: true,
+      eslintrc: {
+        enabled: true, // Default `false`
+        filepath: './.eslintrc-auto-import.json', // Default `./.eslintrc-auto-import.json`
+        globalsPropValue: true, // Default `true`, (true | false | 'readonly' | 'readable' | 'writable' | 'writeable')
+      },
+    }),
   ],
   optimizeDeps: {
     exclude: ['@vue/shared'],

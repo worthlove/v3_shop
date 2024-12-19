@@ -6,15 +6,16 @@
 <template>
   <div style="height:100%">
     <el-breadcrumb separator-class='el-icon-arrow-right'>
-      <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item :to="{ path: '/rights' }">权限列表</el-breadcrumb-item>
+      <el-breadcrumb-item :to="homeRoute">首页</el-breadcrumb-item>
+      <el-breadcrumb-item :to="rightsRoute">角色列表</el-breadcrumb-item>
     </el-breadcrumb>
     <el-card class="scroll-card">
       <el-card style="margin-bottom: 1rem">
         <el-form>
           <el-row :gutter="20">
             <el-col :span="4">
-              <el-tooltip class="box-item" content="点击此按钮,弹出页面进行角色添加" effect="dark" placement="right-start">
+              <el-tooltip class="box-item" content="点击此按钮,弹出页面进行角色添加" effect="dark"
+                          placement="right-start">
                 <el-button plain type="primary" @click="addRoleFn">添加角色</el-button>
               </el-tooltip>
             </el-col>
@@ -23,12 +24,13 @@
       </el-card>
       <el-card>
         <MTable ref="elTablesRef" :index-method="indexMethods" :labelList="TableLabel" :resizeable=true
-          :tableData="tableData" border class="elTables" size="default" style="height: 28.626rem" tableSize="small">
+                :tableData="tableData" border class="elTables" size="default" style="height: 28.626rem"
+                tableSize="small">
         </MTable>
       </el-card>
     </el-card>
     <drawer ref="drawerRef" :title="DrawerTitle" conText="确认" conText1="取消" direction="rtl" size="40%"
-      @cancel="cancelFn" @submit="submitFn">
+            @cancel="cancelFn" @submit="submitFn">
       <template #DrawerBody>
         <!-- 新增用户所需表单 -->
         <el-form v-if="isAddMode === 1" ref='ruleFormRef' :model='addFromData' :rules='addFromRules' label-width='90px'>
@@ -41,7 +43,7 @@
           </el-form-item>
         </el-form>
         <el-form v-if="isAddMode === 2" ref='EditFormRef' :model='editFromData' :rules='editFromRules'
-          label-width='90px'>
+                 label-width='90px'>
           <el-form-item label='角色名称' prop='roleName'>
             <el-input v-model='editFromData.roleName'></el-input>
           </el-form-item>
@@ -50,20 +52,19 @@
           </el-form-item>
         </el-form>
         <TreeFilter v-if="isAddMode === 3" ref="treeFilterRef" :data="treeFilterData"
-          :default-value="initParam.departmentId" :request-api="getRoleListApi" label="authName" multiple title="权限树🌲"
-          @change="changeTreeFilter" />
+                    :default-value="initParam.departmentId" :request-api="getRoleListApi" label="authName" multiple
+                    title="权限树🌲"
+                    @change="changeTreeFilter"/>
       </template>
     </drawer>
   </div>
 </template>
 
 <script lang="tsx" setup>
-import {ElButton, ElRow, ElCol, ElTag, ElMessageBox} from 'element-plus';
+import {ElButton, ElRow, ElCol, ElTag, ElMessageBox, ElNotification, ElForm} from 'element-plus';
 import {Edit, Delete, Setting, CaretRight} from '@element-plus/icons-vue'
-import {ref, computed, onMounted, reactive, nextTick} from 'vue'
 import MTable from "@/components/table/m-table/mTable.vue";
 import Drawer from '@/components/drawer/index.vue'
-import {ElNotification, ElForm} from "element-plus";
 import {
   getAllRoleListApi,
   getRoleIdApi,
@@ -74,6 +75,10 @@ import {
   getRoleListApi
 } from "@/api/authorityApi/index.ts";
 import TreeFilter from "@/components/tree/index.vue";
+import {RouteLocationRaw} from 'vue-router';
+
+const homeRoute: RouteLocationRaw = {path: '/home'};
+const rightsRoute: RouteLocationRaw = {path: '/roles'};
 
 // 获取默认选中的tree数据
 const initParam = reactive({departmentId: []});

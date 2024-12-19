@@ -1,3 +1,5 @@
+import {Menu} from "@element-plus/icons-vue";
+
 /**
  * @description:  是否为数组
  */
@@ -5,7 +7,7 @@ export function isArray(val: any): val is Array<any> {
   return val && Array.isArray(val);
 }
 
-import { FieldNamesProps } from "../components/table/ProTable/interface/index.ts";
+import {FieldNamesProps} from "../components/table/ProTable/interface/index.ts";
 
 const mode = import.meta.env.VITE_ROUTER_MODE;
 
@@ -182,7 +184,9 @@ export function getShowMenuList(menuList: Menu.MenuOptions[]) {
  * @param {Object} result 处理后的结果
  * @returns {Object}
  */
-export const getAllBreadcrumbList = (menuList: Menu.MenuOptions[], parent = [], result: { [key: string]: any } = {}) => {
+export const getAllBreadcrumbList = (menuList: Menu.MenuOptions[], parent = [], result: {
+  [key: string]: any
+} = {}) => {
   for (const item of menuList) {
     result[item.path] = [...parent, item];
     if (item.children) getAllBreadcrumbList(item.children, result[item.path], result);

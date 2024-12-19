@@ -97,11 +97,10 @@
 <script lang="tsx" setup>
 // 导入图标、组件、工具函数、样式、请求接口
 import {Search, Edit, Delete, Setting} from '@element-plus/icons-vue'
-import {ref, computed, onMounted,} from 'vue'
 import MTable from "@/components/table/m-table/mTable.vue";
 import Drawer from '@/components/drawer/index.vue'
 import {validateEMail, validatePhone} from '@/utils/checkReg.js'
-import {ElButton, ElMessage, ElNotification} from "element-plus";
+import {ElButton, ElNotification} from "element-plus";
 import {
   addUserApi,
   userListApi,
@@ -461,22 +460,29 @@ const multipleSelectChangeFn = (val: any) => {
 
 /**
  *  批量删除用户
- * @param params 删除的用户id数组
  * @returns {void}
+ * @param adminId
+ * @param roleId
  */
-const deleteUserInfoFn = (params) => {
-  console.log('deleteUserInfoFn');
-  batchDeleteAPI(params).then(res => {
-    if (res.meta.status === 200) {
-      ElNotification.success(res.meta.msg)
-    } else {
-      ElNotification.error(res.meta.msg)
-    }
-    getUserListFn()
-  })
-}
+// const deleteUserInfoFn = (params) => {
+//   console.log('deleteUserInfoFn');
+//   batchDeleteAPI(params).then(res => {
+//     if (res.meta.status === 200) {
+//       ElNotification.success(res.meta.msg)
+//     } else {
+//       ElNotification.error(res.meta.msg)
+//     }
+//     getUserListFn()
+//   })
+// }
 
-const assignUserRoleFn = (adminId, roleId) => {
+/**
+ * 权限分配
+ * @param adminId
+ * @param roleId
+ */
+
+const assignUserRoleFn = (adminId: any, roleId: any) => {
   console.log('assignUserRoleFn', adminId, roleId);
   assignUserRoleApi(adminId, roleId).then(res => {
     if (res.meta.status === 200) {
@@ -495,10 +501,6 @@ const assignUserRoleFn = (adminId, roleId) => {
 /**
  * 抽屉组件的方法 - 确认按钮
  * @returns {void}
- * @emits submit
- * @emits cancel
- * @emits submitFn
- * @emits cancelFn
  */
 const submitFn = () => {
   debugger
@@ -546,10 +548,6 @@ const submitFn = () => {
 /**
  * 抽屉组件的方法 - 取消按钮
  * @returns {void}
- * @emits submit
- * @emits cancel
- * @emits submitFn
- * @emits cancelFn
  */
 const cancelFn = () => {
   console.log('这是在父组件定义的方法，子组件触发了');
