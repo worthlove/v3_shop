@@ -141,7 +141,7 @@ import lottie from "lottie-web"
 // 导入 Lottie 动画 JSON 文件
 import lottieWoMan from "@/assets/lottie_json/办公女.json"
 import lottieMan from "@/assets/lottie_json/办公男.json"
-import {index} from "@/api/loginApi";
+import {loginApi} from "@/api/loginApi";
 import {ElForm, ElNotification} from "element-plus";
 import {useUserInfoStore} from "@/store/modules/userinfo.ts";
 import router from "@/router";
@@ -242,7 +242,7 @@ const loginFn = () => {
   }
   formRef.value.validate((valid: any) => {
     if (valid) {
-      index(form.value).then(res => {
+      loginApi(form.value).then(res => {
         if (res.meta.status !== 200) {
           ElNotification.error('登陆失败！')
         } else {
