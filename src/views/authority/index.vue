@@ -14,8 +14,7 @@
         <el-form>
           <el-row :gutter="20">
             <el-col :span="4">
-              <el-tooltip class="box-item" content="点击此按钮,弹出页面进行角色添加" effect="dark"
-                          placement="right-start">
+              <el-tooltip class="box-item" content="点击此按钮,弹出页面进行角色添加" effect="dark" placement="right-start">
                 <el-button plain type="primary" @click="addRoleFn">添加角色</el-button>
               </el-tooltip>
             </el-col>
@@ -24,13 +23,12 @@
       </el-card>
       <el-card>
         <MTable ref="elTablesRef" :index-method="indexMethods" :labelList="TableLabel" :resizeable=true
-                :tableData="tableData" border class="elTables" size="default" style="height: 28.626rem"
-                tableSize="small">
+          :tableData="tableData" border class="elTables" size="default" style="height: 28.626rem" tableSize="small">
         </MTable>
       </el-card>
     </el-card>
     <drawer ref="drawerRef" :title="DrawerTitle" conText="确认" conText1="取消" direction="rtl" size="40%"
-            @cancel="cancelFn" @submit="submitFn">
+      @cancel="cancelFn" @submit="submitFn">
       <template #DrawerBody>
         <!-- 新增用户所需表单 -->
         <el-form v-if="isAddMode === 1" ref='ruleFormRef' :model='addFromData' :rules='addFromRules' label-width='90px'>
@@ -43,7 +41,7 @@
           </el-form-item>
         </el-form>
         <el-form v-if="isAddMode === 2" ref='EditFormRef' :model='editFromData' :rules='editFromRules'
-                 label-width='90px'>
+          label-width='90px'>
           <el-form-item label='角色名称' prop='roleName'>
             <el-input v-model='editFromData.roleName'></el-input>
           </el-form-item>
@@ -51,16 +49,9 @@
             <el-input v-model='editFromData.roleDesc'></el-input>
           </el-form-item>
         </el-form>
-        <TreeFilter
-            v-if="isAddMode === 3"
-            :data="treeFilterData"
-            :default-value="initParam.departmentId"
-            :request-api="getRoleListApi"
-            label="authName"
-            multiple
-            title="权限树🌲"
-            @change="changeTreeFilter"
-        />
+        <TreeFilter v-if="isAddMode === 3" ref="treeFilterRef" :data="treeFilterData"
+          :default-value="initParam.departmentId" :request-api="getRoleListApi" label="authName" multiple title="权限树🌲"
+          @change="changeTreeFilter" />
       </template>
     </drawer>
   </div>
@@ -69,10 +60,10 @@
 <script lang="tsx" setup>
 import {ElButton, ElRow, ElCol, ElTag, ElMessageBox} from 'element-plus';
 import {Edit, Delete, Setting, CaretRight} from '@element-plus/icons-vue'
-import {ref, computed, onMounted, reactive} from 'vue'
+import {ref, computed, onMounted, reactive, nextTick} from 'vue'
 import MTable from "@/components/table/m-table/mTable.vue";
 import Drawer from '@/components/drawer/index.vue'
-import {ElNotification} from "element-plus";
+import {ElNotification, ElForm} from "element-plus";
 import {
   getAllRoleListApi,
   getRoleIdApi,
@@ -86,6 +77,8 @@ import TreeFilter from "@/components/tree/index.vue";
 
 // 获取默认选中的tree数据
 const initParam = reactive({departmentId: []});
+
+const treeFilterRef = ref(null);
 
 // 获取的tree 数据
 const treeFilterData = ref<any>([]);
@@ -106,14 +99,15 @@ const DrawerTitle = ref('新增角色')
 const isAddMode = ref(1)
 
 // 新增用户所需表单 校验规则
-const ruleFormRef = ref(null)
+const ruleFormRef = ref<InstanceType<typeof ElForm> | null>(null)
 // 编辑用户所需表单 校验规则
-const EditFormRef = ref(null)
+const EditFormRef = ref<InstanceType<typeof ElForm> | null>(null)
 
 // 新增用户所需表单
 const addFromData = ref({
   roleName: '',
   roleDesc: '',
+  id: ''
 })
 
 // 新增用户所需表单 校验规则
@@ -127,6 +121,7 @@ const addFromRules = ref({
 const editFromData = ref({
   roleName: '',
   roleDesc: '',
+  id: ''
 })
 // 编辑用户所需表单 校验规则
 const editFromRules = ref({
@@ -307,7 +302,15 @@ const authorityFn = (row: any) => {
   console.log('authorityFn', row)
   isAddMode.value = 3
   DrawerTitle.value = '角色分配'
-  initParam.departmentId = getLeafKeys(row.children, [])
+  // 获取权限树的默认选中的id
+  nextTick(() => {
+    const departmentId = getLeafKeys(row.children, [])
+    console.log('departmentId', departmentId)
+    if (treeFilterRef.value) {
+      console.log(treeFilterRef.value.treeRef)
+      treeFilterRef.value.treeRef.setCheckedKeys(departmentId, true)
+    }
+  })
   drawerRef.value.open()
 }
 
@@ -351,7 +354,7 @@ const submitFn = () => {
     if (!EditFormRef.value) {
       ElNotification.error('编辑用户的表单校验失败!');
     }
-    EditFormRef.value.validate((valid: any) => {
+    if (EditFormRef.value) EditFormRef.value.validate((valid: any) => {
       if (valid) {
         console.log('编辑用户的表单校验成功!', editFromData.value);
         updateRoleApi(editFromData.value).then((res: any) => {

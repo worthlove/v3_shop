@@ -135,7 +135,7 @@
 <script lang="ts" setup>
 
 import BrightAndDark from "@/components/switch/brightAndDark.vue";
-import {onMounted, ref, reactive} from 'vue';
+import {onMounted, ref} from 'vue';
 
 // 导入 Lottie 动画库
 import lottie from "lottie-web"
@@ -143,7 +143,7 @@ import lottie from "lottie-web"
 import lottieWoMan from "@/assets/lottie_json/办公女.json"
 import lottieMan from "@/assets/lottie_json/办公男.json"
 import {index} from "@/api/loginApi";
-import {ElNotification} from "element-plus";
+import {ElForm, ElNotification} from "element-plus";
 import {useUserInfoStore} from "@/store/modules/userinfo.ts";
 import router from "@/router";
 
@@ -223,7 +223,7 @@ const form = ref({
   password: '123456'
 });
 
-const formRef = ref(null);
+const formRef = ref<InstanceType<typeof ElForm>|null>(null);
 
 const rules = {
   username: [
@@ -352,10 +352,10 @@ const changeTheme = (activeState: boolean) => {
   background: repeating-conic-gradient(from 30deg,
       #0000 0 120deg,
       var(--c3) 0 180deg) calc(0.5 * var(--s)) calc(0.5 * var(--s) * 0.577),
-  repeating-conic-gradient(from 30deg,
-          var(--c1) 0 60deg,
-          var(--c2) 0 120deg,
-          var(--c3) 0 180deg);
+    repeating-conic-gradient(from 30deg,
+      var(--c1) 0 60deg,
+      var(--c2) 0 120deg,
+      var(--c3) 0 180deg);
   background-size: var(--s) calc(var(--s) * 0.577);
 }
 

@@ -1,53 +1,49 @@
 <template>
   <el-table ref="'tableRef'+condition.TableIndex" :data="tableData" :header-cell-style="{
       background: '#f5f7fa',color: '#303133','text-align': 'center'}" :resizeable="resizeable" :size="tableSize" border
-            fit header-algin="center" height="100%" highlight-current-row tooltip-effect="dark" width="100%"
-            @select="handleSelect" @selection-change="handleSelectionChange" @sort-change="handleSortChange"
-            @cell-click="handleCellClick">
+    fit header-algin="center" height="100%" highlight-current-row tooltip-effect="dark" width="100%"
+    @select="handleSelect" @selection-change="handleSelectionChange" @sort-change="handleSortChange"
+    @cell-click="handleCellClick">
     <template v-if="labelList && labelList.length > 0">
       <template v-for="(item, index) in labelList" :key="index">
 
         <template v-if="item.type == 'expand'">
           <el-table-column :fixed="item.fixed" :label="item.label" :width="item.width" type="expand">
             <template v-if="item.render" #default="props">
-              <component :is="item.render" v-if="item.render" v-bind="props"/>
-              <slot v-else :name="item.type" v-bind="props"/>
+              <component :is="item.render" v-if="item.render" v-bind="props" />
+              <slot v-else :name="item.type" v-bind="props" />
             </template>
           </el-table-column>
         </template>
 
         <template v-else-if="item.selection && item.selection === 'checkedBox'">
           <el-table-column :key="index" :fixed="item.fixed" align="center" type="selection"
-                           width="50px"></el-table-column>
+            width="50px"></el-table-column>
         </template>
         <template v-else-if="item.selection && item.selection === 'radio'">
           <el-table-column :key="index" :fixed="item.fixed" align="center" class-name="radio_selection" labelwidth="50">
             <template v-slot="scope">
               <el-radio v-model="checkedRadio" :label="scope.row.id" @change="() => handleSingleSelectChange(scope.row)"
-                        @click="() => handleSingleSelectClick(scope.row, scope.row.id, scope.$index)">{{ '' }}
+                @click="() => handleSingleSelectClick(scope.row, scope.row.id, scope.$index)">{{ '' }}
               </el-radio>
             </template>
           </el-table-column>
         </template>
         <template v-else-if="item.type === 'index'">
           <el-table-column :key="index" :fixed="item.fixed" :index="indexMethod" :label="item.label || '序号'"
-                           align="center"
-                           type="index"
-                           with="65px"></el-table-column>
+            align="center" type="index" with="65px"></el-table-column>
         </template>
-        <el-table-column v-else :align="item.align" :fixed="item.fixed"
-                         :label="item.label" :prop="item.prop" :show-overflow-tooltip="item.showOverflowTooltip"
-                         :sortable="item.sortable"
-                         :width="item.width">
+        <el-table-column v-else :align="item.align" :fixed="item.fixed" :label="item.label" :prop="item.prop"
+          :show-overflow-tooltip="item.showOverflowTooltip" :sortable="item.sortable" :width="item.width">
           <template #default="scope">
             <span :class="typeof item.class === 'function' ? item.class(scope.row) : item.class"
-                  @click="() => item.click?.(scope.row)">
+              @click="() => item.click?.(scope.row)">
               <template v-if="item.transfer">
                 {{ item.transfer(scope.row) }}
               </template>
 
               <template v-else-if="item.render">
-                <component :is="item.render" v-if="item.render" v-bind="scope"/>
+                <component :is="item.render" v-if="item.render" v-bind="scope" />
               </template>
 
               <template v-else>
@@ -71,7 +67,6 @@
 <script lang="ts">
 import {defineComponent, ref, reactive, watch} from 'vue';
 import {ElTable, ElTableColumn, ElRadio, ElMessage} from 'element-plus';
-
 export default defineComponent({
   name: 'ElTables',
   methods: {ElMessage},
@@ -93,6 +88,7 @@ export default defineComponent({
     labelList: {
       type: Array,
       required: true,
+      default: () => [],
     },
     /**
      * 单选 | 多选
@@ -203,8 +199,6 @@ export default defineComponent({
 });
 </script>
 <style lang='scss' scoped>
-
-
 //:deep(.el-table__body-wrapper .el-scrollbar__thumb) {
 //  background-color: #49aaec;
 //}
