@@ -32,7 +32,8 @@
         </template>
 
         <template v-else-if="item.type === 'index'">
-          <el-table-column :key="index" :fixed="item.fixed" :index="indexMethod" :label="item.label || '序号'"
+          <el-table-column :key="index" :fixed="item.fixed" :index="indexMethod"
+                           :label="item.label || '序号'"
                            align="center" type="index" with="65px"></el-table-column>
         </template>
 

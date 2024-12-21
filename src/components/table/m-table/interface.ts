@@ -1,7 +1,7 @@
 export interface LabelItem {
-  type: string;
+  type?: string;
   label?: string;
-  fixed?: boolean;
+  fixed?: boolean | string;
   width?: string | number;
   render?: any; // 可以是具体的组件类型或函数
   selection?: string;
