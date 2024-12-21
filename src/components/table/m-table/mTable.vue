@@ -20,6 +20,7 @@
           <el-table-column :key="index" :fixed="item.fixed" align="center" type="selection"
                            width="50px"></el-table-column>
         </template>
+
         <template v-else-if="item.selection && item.selection === 'radio'">
           <el-table-column :key="index" :fixed="item.fixed" align="center" class-name="radio_selection" labelwidth="50">
             <template v-slot="scope">
@@ -29,10 +30,12 @@
             </template>
           </el-table-column>
         </template>
+
         <template v-else-if="item.type === 'index'">
           <el-table-column :key="index" :fixed="item.fixed" :index="indexMethod" :label="item.label || '序号'"
                            align="center" type="index" with="65px"></el-table-column>
         </template>
+
         <el-table-column v-else :align="item.align" :fixed="item.fixed" :label="item.label" :prop="item.prop"
                          :show-overflow-tooltip="item.showOverflowTooltip" :sortable="item.sortable"
                          :width="item.width">
@@ -67,6 +70,7 @@
 
 <script lang="ts">
 import {ElTable, ElTableColumn, ElRadio, ElMessage} from 'element-plus';
+import {LabelItem} from './interface.ts';
 
 export default defineComponent({
   name: 'ElTables',
@@ -87,7 +91,7 @@ export default defineComponent({
      * @type {Array}
      */
     labelList: {
-      type: Array,
+      type: Array as () => LabelItem[],
       required: true,
       default: () => [],
     },
@@ -156,7 +160,7 @@ export default defineComponent({
     'cellClick',
   ],
   setup(props, {emit}) {
-    const tableRef = ref();
+    const tableRef = ref<InstanceType<typeof ElTable>>();
     const condition = reactive({TableIndex: Math.random() * 999});
 
     const toggleSelection = (rows?: any[]) => {
@@ -186,6 +190,7 @@ export default defineComponent({
     );
 
     return {
+      condition,
       tableRef,
       toggleSelection,
       handleSortChange,

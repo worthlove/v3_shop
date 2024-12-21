@@ -29,8 +29,8 @@
         </MTable>
       </el-card>
     </el-card>
-    <drawer ref="drawerRef" :title="DrawerTitle" conText="确认" conText1="取消" direction="rtl" size="40%"
-            @cancel="cancelFn" @submit="submitFn">
+    <MDrawer ref="drawerRef" :title="DrawerTitle" conText="确认" conText1="取消" direction="rtl" size="40%"
+             @cancel="cancelFn" @submit="submitFn">
       <template #DrawerBody>
         <!-- 新增用户所需表单 -->
         <el-form v-if="isAddMode === 1" ref='ruleFormRef' :model='addFromData' :rules='addFromRules' label-width='90px'>
@@ -56,7 +56,7 @@
                     title="权限树🌲"
                     @change="changeTreeFilter"/>
       </template>
-    </drawer>
+    </MDrawer>
   </div>
 </template>
 
@@ -64,10 +64,9 @@
 import {ElButton, ElRow, ElCol, ElTag, ElMessageBox, ElNotification, ElForm} from 'element-plus';
 import {Edit, Delete, Setting, CaretRight} from '@element-plus/icons-vue'
 import MTable from "@/components/table/m-table/mTable.vue";
-import Drawer from '@/components/drawer/index.vue'
+import MDrawer from '@/components/drawer/mDrawer.vue'
 import {
   getAllRoleListApi,
-  getRoleIdApi,
   addRoleApi,
   updateRoleApi,
   deleteRoleApi,
@@ -83,7 +82,7 @@ const rightsRoute: RouteLocationRaw = {path: '/roles'};
 // 获取默认选中的tree数据
 const initParam = reactive({departmentId: []});
 
-const treeFilterRef = ref(null);
+const treeFilterRef = ref<InstanceType<typeof TreeFilter> | null>(null);
 
 // 获取的tree 数据
 const treeFilterData = ref<any>([]);
@@ -94,8 +93,9 @@ const changeTreeFilter = (data: any) => {
   initParam.departmentId = data;
 }
 
+
 // drawer 组件的引用
-const drawerRef = ref(null)
+const drawerRef = ref<InstanceType<typeof MDrawer> | null>(null)
 
 // 新增用户所需表单 新增角色｜ 编辑用户所需表单 编辑角色 ｜ 角色分配所需表单 分配角色
 const DrawerTitle = ref('新增角色')
@@ -257,19 +257,19 @@ const addRoleFn = () => {
   console.log('addRoleFn')
   isAddMode.value = 1
   DrawerTitle.value = '新增角色'
-  drawerRef.value.open()
+  drawerRef.value?.open()
 }
 
 // 根据 ID 查询角色
-const getRoleIdFn = (id: number) => {
-  getRoleIdApi(id).then((res: any) => {
-    if (res.meta.status !== 200) {
-      ElNotification.error('根据 ID 查询角色失败')
-    } else {
-      ElNotification.success('根据 ID 查询角色成功')
-    }
-  })
-}
+// const getRoleIdFn = (id: number) => {
+//   getRoleIdApi(id).then((res: any) => {
+//     if (res.meta.status !== 200) {
+//       ElNotification.error('根据 ID 查询角色失败')
+//     } else {
+//       ElNotification.success('根据 ID 查询角色成功')
+//     }
+//   })
+// }
 
 // 编辑角色
 const editFn = (row: any) => {
@@ -279,7 +279,7 @@ const editFn = (row: any) => {
   editFromData.value.roleName = row.roleName
   editFromData.value.roleDesc = row.roleDesc
   editFromData.value.id = row.id
-  drawerRef.value.open()
+  drawerRef.value?.open()
 }
 
 // 删除角色
@@ -311,12 +311,9 @@ const authorityFn = (row: any) => {
   nextTick(() => {
     const departmentId = getLeafKeys(row.children, [])
     console.log('departmentId', departmentId)
-    if (treeFilterRef.value) {
-      console.log(treeFilterRef.value.treeRef)
-      treeFilterRef.value.treeRef.setCheckedKeys(departmentId, true)
-    }
+    if (treeFilterRef.value && treeFilterRef.value.treeRef) treeFilterRef.value.treeRef.setCheckedKeys(departmentId, true)
   })
-  drawerRef.value.open()
+  drawerRef.value?.open()
 }
 
 // 获取叶子节点的 id 并返回 id 数组
@@ -346,7 +343,7 @@ const submitFn = () => {
             ElNotification.error('添加角色失败')
           } else {
             ElNotification.success('添加角色成功')
-            drawerRef.value.close()
+            drawerRef.value?.close()
           }
           getRolesFn('')
         })
@@ -370,7 +367,7 @@ const submitFn = () => {
             editFromData.value.roleDesc = ''
             editFromData.value.id = ''
             editFromData.value.roleName = ''
-            drawerRef.value.close()
+            drawerRef.value?.close()
           }
           getRolesFn('')
         })
@@ -396,7 +393,7 @@ const cancelFn = () => {
   } else if (isAddMode.value === 3) {
     console.log('角色分配')
   }
-  drawerRef.value.close()
+  drawerRef.value?.close()
 }
 
 const removeRightById = (row: any, id: number) => {

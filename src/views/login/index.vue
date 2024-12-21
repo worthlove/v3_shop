@@ -243,7 +243,7 @@ const loginFn = () => {
   formRef.value.validate((valid: any) => {
     if (valid) {
       loginApi(form.value).then(res => {
-        if (res.meta.status !== 200) {
+        if ((res as any).meta.status !== 200) {
           ElNotification.error('登陆失败！')
         } else {
           ElNotification.success('登陆成功！')

@@ -62,7 +62,7 @@ import BrightAndDark from "@/components/switch/brightAndDark.vue";
 
 const isCollapse = ref(false);
 
-const iconsObj = ref({
+const iconsObj = ref<{ [key: number]: string }>({
   125: 'iconfont icon-user',
   103: 'iconfont icon-tijikongjian',
   101: 'iconfont icon-shangpin',
@@ -90,7 +90,7 @@ const exitFn = () => {
   router.push('/');
 };
 
-const menuList = ref([]);
+const menuList = ref<{ authName: any; children: any; id: string }[]>([]);
 
 // 保存导航状态
 const saveNavStatusFn = (path: string) => {
@@ -101,7 +101,7 @@ const saveNavStatusFn = (path: string) => {
 const getMenuList = () => {
   getMenuListApi().then((res) => {
     console.log(res)
-    if (res.meta.status === 200) {
+    if ((res as any).meta.status === 200) {
       menuList.value = res.data;
       console.log(menuList.value, '菜单列表')
     }

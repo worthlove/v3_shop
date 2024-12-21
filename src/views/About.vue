@@ -18,7 +18,7 @@
 <script lang="ts" setup>
 import {useRouter} from 'vue-router';
 import {useUserInfoStore} from '@/store/modules/userinfo.ts';
-import {index} from '@/api/loginApi';
+import {loginApi} from '@/api/loginApi';
 import {ElNotification} from "element-plus";
 
 const router = useRouter();
@@ -33,12 +33,12 @@ const goToOtherPage = () => {
     username: 'admin',
     password: '123456'
   }
-  index(params).then(res => {
-    if (res.meta.status !== 200) {
-      ElNotification.error(res.meta.msg)
+  loginApi(params).then(res => {
+    if ((res as any).meta.status !== 200) {
+      ElNotification.error((res as any).meta.msg)
     } else {
       console.log(res.data.token)
-      ElNotification.success(res.meta.msg)
+      ElNotification.success((res as any).meta.msg)
 
       // 调用 store 中的方法,将 token 存储到 store 中
       userInfoStore.setToken(res.data.token);

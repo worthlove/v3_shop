@@ -45,8 +45,8 @@
                        @current-change="handleCurrentChangeFn"></el-pagination>
       </el-card>
     </el-card>
-    <drawer ref="drawerRef" :title="DrawerTitle" conText="确认" conText1="取消" direction="rtl" size="40%"
-            @cancel="cancelFn" @submit="submitFn">
+    <MDrawer ref="drawerRef" :title="DrawerTitle" conText="确认" conText1="取消" direction="rtl" size="40%"
+             @cancel="cancelFn" @submit="submitFn">
       <template #DrawerBody>
         <!-- 新增用户所需表单 -->
         <el-form v-if="isAddMode === 1" ref='ruleFormRef' :model='addFromData' :rules='addFromRules' label-width='70px'>
@@ -84,13 +84,13 @@
           </el-form-item>
           <el-form-item label='角色分配'>
             <el-select v-model='selectedRolesId' placeholder='请选择角色分配' style='width: 100%'>
-              <el-option v-for='item in roleseList' :key='item.id' :label='item.roleName' :value='item.id'>
+              <el-option v-for='(item) in roleseList' :key='item.id' :label='item.roleName' :value='item.id'>
               </el-option>
             </el-select>
           </el-form-item>
         </el-form>
       </template>
-    </drawer>
+    </MDrawer>
   </div>
 </template>
 
@@ -98,15 +98,14 @@
 // 导入图标、组件、工具函数、样式、请求接口
 import {Search, Edit, Delete, Setting} from '@element-plus/icons-vue'
 import MTable from "@/components/table/m-table/mTable.vue";
-import Drawer from '@/components/drawer/index.vue'
+import MDrawer from '@/components/drawer/mDrawer.vue'
 import {validateEMail, validatePhone} from '@/utils/checkReg.js'
-import {ElButton, ElNotification} from "element-plus";
+import {ElButton, ElForm, ElNotification} from "element-plus";
 import {
   addUserApi,
   userListApi,
   userSwitchApi,
   deleteUserApi,
-  batchDeleteAPI,
   getUserInfoApi,
   updateUserInfoApi,
   getUserRoleApi,
@@ -179,24 +178,23 @@ const editFromRules = {
 // 用户信息
 const userInfo = ref({
   username: '',
-  role_name: ''
+  role_name: '',
+  role_id: ''
 })
 
 // 获取用户信息
-const roleseList = ref([])
+const roleseList = ref<{ id: number; roleName: string }[]>([])
 
 // 选中的角色ID
 const selectedRolesId = ref('')
 
 // drawer 组件的引用
-const drawerRef = ref(null)
+const drawerRef = ref<InstanceType<typeof MDrawer> | null>(null)
 // 表格组件的引用
-const ruleFormRef = ref(null)
+const ruleFormRef = ref<InstanceType<typeof ElForm> | null>(null)
 // 编辑表单
-const editFormRef = ref(null)
+const editFormRef = ref<InstanceType<typeof ElForm> | null>(null)
 
-// 定义一个表格数据
-let tableData = ref([])
 
 // 表格表头的数据
 const TableLabel = [
@@ -207,7 +205,7 @@ const TableLabel = [
     fixed: 'left',
     label: "Expand",
     // expand: true,
-    render: (props) => { // 渲染函数
+    render: (props: any) => { // 渲染函数
       return (
           <>
             <el-card>
@@ -317,22 +315,8 @@ const TableLabel = [
   }
 ]
 
-/**
- * 修改用户状态
- * @param row 用户信息参数
- */
-const userStateChangeEvent = (row: Object) => {
-  if (row.id === 500) return
-  userSwitchApi(row).then(res => {
-    if (res.meta.status === 200) {
-      ElNotification.success(res.meta.msg)
-    } else {
-      row.state = !row.state
-      ElNotification.error(res.meta.msg)
-    }
-    getUserListFn()
-  })
-}
+// 定义一个表格数据
+const tableData = ref<any[]>([])
 
 /**
  * 获取用户信息
@@ -344,6 +328,23 @@ const getUserListFn = (query: string) => {
   queryFn()
 }
 
+
+/**
+ * 修改用户状态
+ * @param row 用户信息参数
+ */
+const userStateChangeEvent = (row: any) => {
+  if (row.id === 500) return
+  userSwitchApi(row).then(res => {
+    if ((res as any).meta.status === 200) {
+      ElNotification.success((res as any).meta.msg)
+    } else {
+      row.state = !row.state
+      ElNotification.error((res as any).meta.msg)
+    }
+    getUserListFn('')
+  })
+}
 /**
  * 对数据进行排序，确保ID为500的用户在第一行
  * @param data 用户信息数组
@@ -361,11 +362,9 @@ const sortData = (data: any[]) => {
  */
 const queryFn = () => {
   userListApi(queryInfo.value).then(res => {
-    if (res.meta.status === 200) {
+    if ((res as any).meta.status === 200) {
       // 直接赋值数组
-      const sortedData = sortData(res.data.users);
-      // 直接赋值数组
-      tableData.value = sortedData;
+      tableData.value = sortData(res.data.users);
       total.value = res.data.total
     }
   })
@@ -401,7 +400,6 @@ const handleCurrentChangeFn = (newPage: number) => {
   console.log('分页组件的方法 - 当前页数');
   queryInfo.value.pagenum = newPage;
   queryFn()
-
 }
 
 /**
@@ -420,25 +418,25 @@ const addUserInfoFn = () => {
   console.log('addUserInfoFn');
   DrawerTitle.value = '新增用户'
   isAddMode.value = 1
-  drawerRef.value.open()
+  drawerRef.value?.open()
 }
 
 /**
  * 删除用户
  * @param id 用户id
  * @returns {void}
- */
-const deleteFn = (id) => {
+ * */
+const deleteFn = (id: any) => {
   if (id === 500) {
     ElNotification.error('该用户禁止删除!');
   } else {
     deleteUserApi(id).then(res => {
-      if (res.meta.status === 200) {
-        ElNotification.success(res.meta.msg)
+      if ((res as any).meta.status === 200) {
+        ElNotification.success((res as any).meta.msg)
       } else {
-        ElNotification.error(res.meta.msg)
+        ElNotification.error((res as any).meta.msg)
       }
-      getUserListFn()
+      getUserListFn('')
     })
   }
 }
@@ -467,10 +465,10 @@ const multipleSelectChangeFn = (val: any) => {
 // const deleteUserInfoFn = (params) => {
 //   console.log('deleteUserInfoFn');
 //   batchDeleteAPI(params).then(res => {
-//     if (res.meta.status === 200) {
-//       ElNotification.success(res.meta.msg)
+//     if ((res as any).meta.status === 200) {
+//       ElNotification.success((res as any).meta.msg)
 //     } else {
-//       ElNotification.error(res.meta.msg)
+//       ElNotification.error((res as any).meta.msg)
 //     }
 //     getUserListFn()
 //   })
@@ -484,17 +482,17 @@ const multipleSelectChangeFn = (val: any) => {
 
 const assignUserRoleFn = (adminId: any, roleId: any) => {
   console.log('assignUserRoleFn', adminId, roleId);
-  assignUserRoleApi(adminId, roleId).then(res => {
-    if (res.meta.status === 200) {
-      ElNotification.success(res.meta.msg)
+  assignUserRoleApi(adminId.id, roleId).then(res => {
+    if ((res as any).meta.status === 200) {
+      ElNotification.success((res as any).meta.msg)
       userInfo.value.role_name = ''
       userInfo.value.role_id = ''
       selectedRolesId.value = ''
-      drawerRef.value.close()
+      drawerRef.value?.close()
     } else {
-      ElNotification.error(res.meta.msg)
+      ElNotification.error((res as any).meta.msg)
     }
-    getUserListFn()
+    getUserListFn('')
   })
 }
 
@@ -503,29 +501,28 @@ const assignUserRoleFn = (adminId: any, roleId: any) => {
  * @returns {void}
  */
 const submitFn = () => {
-  debugger
   if (isAddMode.value === 1) {
     console.log('新增用户');
     if (!ruleFormRef.value) {
       ElNotification.error('添加用户的表单校验失败!');
       return;
     }
-    ruleFormRef.value.validate((valid: any) => {
+    if (ruleFormRef.value) ruleFormRef.value.validate((valid: any) => {
       if (valid) {
         addUserApi(addFromData.value).then(res => {
-          if (res.meta.status === 201) {
-            ElNotification.success(res.meta.msg)
+          if ((res as any).meta.status === 201) {
+            ElNotification.success((res as any).meta.msg)
             addFromData.value = {
               username: '',
               password: '',
               email: '',
               mobile: ''
             }
-            drawerRef.value.close()
+            drawerRef.value?.close()
           } else {
-            ElNotification.error(res.meta.msg)
+            ElNotification.error((res as any).meta.msg)
           }
-          getUserListFn()
+          getUserListFn('')
         })
       } else {
         ElNotification.error('添加用户的表单校验失败!');
@@ -540,7 +537,7 @@ const submitFn = () => {
       ElNotification.error('请选择角色!');
     } else {
       console.log(selectedRolesId.value, "selectedRolesId.value");
-      assignUserRoleFn(userInfo.value.id, selectedRolesId.value)
+      assignUserRoleFn(userInfo.value, selectedRolesId.value)
     }
   }
 }
@@ -558,10 +555,10 @@ const cancelFn = () => {
       email: '',
       mobile: ''
     }
-  } else if (isAddMode === 3) {
+  } else if (isAddMode.value === 3) {
     selectedRolesId.value = ''
   }
-  drawerRef.value.close()
+  drawerRef.value?.close()
 }
 
 /**
@@ -569,19 +566,19 @@ const cancelFn = () => {
  * @param row 用户信息
  * @returns {void}
  */
-const editFn = (row) => {
+const editFn = (row: any) => {
   console.log('editFn', row);
   if (row.id === 500) {
     ElNotification.error('该用户禁止修改!');
   } else {
     DrawerTitle.value = '编辑用户'
     getUserInfoApi(row.id).then(res => {
-      if (res.meta.status === 200) {
+      if ((res as any).meta.status === 200) {
         editFromData.value = res.data
         isAddMode.value = 2
-        drawerRef.value.open()
+        drawerRef.value?.open()
       } else {
-        ElNotification.error(res.meta.msg)
+        ElNotification.error((res as any).meta.msg)
       }
     })
   }
@@ -595,21 +592,21 @@ const updateUserInfoFn = () => {
   if (!editFormRef.value) {
     ElNotification.error('更新用户的表单校验失败!');
   }
-  editFormRef.value.validate((valid: any) => {
+  if (editFormRef.value) editFormRef.value.validate((valid: any) => {
     if (valid) {
       updateUserInfoApi(editFromData.value).then(res => {
-        if (res.meta.status === 200) {
-          ElNotification.success(res.meta.msg)
+        if ((res as any).meta.status === 200) {
+          ElNotification.success((res as any).meta.msg)
           editFromData.value = {
             username: '',
             email: '',
             mobile: ''
           }
-          drawerRef.value.close()
+          drawerRef.value?.close()
         } else {
-          ElNotification.error(res.meta.msg)
+          ElNotification.error((res as any).meta.msg)
         }
-        getUserListFn()
+        getUserListFn('')
       })
     } else {
       ElNotification.error('更新用户的表单校验失败!');
@@ -622,13 +619,13 @@ const updateUserInfoFn = () => {
  * @returns {void}
  * @param row
  */
-const settingFn = (row) => {
+const settingFn = (row: any) => {
   console.log('settingFn', row);
   DrawerTitle.value = '分配角色'
   isAddMode.value = 3
   getuserRoleFn()
   userInfo.value = row
-  drawerRef.value.open()
+  drawerRef.value?.open()
 }
 /**
  * 获取用户的角色列表
@@ -636,10 +633,10 @@ const settingFn = (row) => {
  */
 const getuserRoleFn = () => {
   getUserRoleApi().then(res => {
-    if (res.meta.status === 200) {
+    if ((res as any).meta.status === 200) {
       roleseList.value = res.data
     } else {
-      ElNotification.error(res.meta.msg)
+      ElNotification.error((res as any).meta.msg)
     }
   })
 }
