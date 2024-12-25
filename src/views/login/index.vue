@@ -203,7 +203,7 @@ onMounted(() => {
     });
   }
 
-  console.warn("location.href", location.href);
+  
 
   // 检查当前 URL 是否包含 #reloaded 片段
   if (location.href.indexOf("#reloaded") == -1) {
@@ -265,13 +265,13 @@ const RegisterFn = () => {
 // 更换主题
 const changeTheme = (activeState: boolean) => {
   activeState = !activeState;
-  console.log("changeTheme", activeState);
+  
 };
 </script>
 
 
 <style lang="scss" scoped>
-@import "@/views/login/styles/login.scss";
+@use "@/views/login/styles/login.scss";
 
 .loginBox {
   width: 450px;
@@ -351,10 +351,10 @@ const changeTheme = (activeState: boolean) => {
   background: repeating-conic-gradient(from 30deg,
       #0000 0 120deg,
       var(--c3) 0 180deg) calc(0.5 * var(--s)) calc(0.5 * var(--s) * 0.577),
-  repeating-conic-gradient(from 30deg,
-          var(--c1) 0 60deg,
-          var(--c2) 0 120deg,
-          var(--c3) 0 180deg);
+    repeating-conic-gradient(from 30deg,
+      var(--c1) 0 60deg,
+      var(--c2) 0 120deg,
+      var(--c3) 0 180deg);
   background-size: var(--s) calc(var(--s) * 0.577);
 }
 

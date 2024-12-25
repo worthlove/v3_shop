@@ -7,7 +7,9 @@ import {resolve} from 'path';
 // 导入 vue-jsx 插件，用于支持 JSX
 import vueJsx from '@vitejs/plugin-vue-jsx';
 
-import AutoImport from 'unplugin-auto-import/vite'
+import AutoImport from 'unplugin-auto-import/vite';
+
+import vueDevTools from 'vite-plugin-vue-devtools';
 
 // 导入 package.json 文件，用于获取项目信息
 import pkg from './package.json';
@@ -30,6 +32,7 @@ export default defineConfig({
   plugins: [
     vue(),
     vueJsx(),
+    vueDevTools(),
     AutoImport({
       imports: ['vue', 'vue-router'],
       dts: './auto-imports.d.ts',

@@ -14,8 +14,7 @@
         <el-form>
           <el-row :gutter="20">
             <el-col :span="4">
-              <el-tooltip class="box-item" content="点击此按钮,弹出页面进行角色添加" effect="dark"
-                          placement="right-start">
+              <el-tooltip class="box-item" content="点击此按钮,弹出页面进行角色添加" effect="dark" placement="right-start">
                 <el-button plain type="primary" @click="addRoleFn">添加角色</el-button>
               </el-tooltip>
             </el-col>
@@ -24,13 +23,12 @@
       </el-card>
       <el-card>
         <MTable ref="elTablesRef" :index-method="indexMethods" :labelList="TableLabel" :resizeable=true
-                :tableData="tableData" border class="elTables" size="default" style="height: 28.626rem"
-                tableSize="small">
+          :tableData="tableData" border class="elTables" size="default" style="height: 28.626rem" tableSize="small">
         </MTable>
       </el-card>
     </el-card>
     <MDrawer ref="drawerRef" :title="DrawerTitle" conText="确认" conText1="取消" direction="rtl" size="40%"
-             @cancel="cancelFn" @submit="submitFn">
+      @cancel="cancelFn" @submit="submitFn">
       <template #DrawerBody>
         <!-- 新增用户所需表单 -->
         <el-form v-if="isAddMode === 1" ref='ruleFormRef' :model='addFromData' :rules='addFromRules' label-width='90px'>
@@ -43,7 +41,7 @@
           </el-form-item>
         </el-form>
         <el-form v-if="isAddMode === 2" ref='EditFormRef' :model='editFromData' :rules='editFromRules'
-                 label-width='90px'>
+          label-width='90px'>
           <el-form-item label='角色名称' prop='roleName'>
             <el-input v-model='editFromData.roleName'></el-input>
           </el-form-item>
@@ -52,9 +50,8 @@
           </el-form-item>
         </el-form>
         <TreeFilter v-if="isAddMode === 3" ref="treeFilterRef" :data="treeFilterData"
-                    :default-value="initParam.departmentId" :request-api="getRoleListApi" label="authName" multiple
-                    title="权限树🌲"
-                    @change="changeTreeFilter"/>
+          :default-value="initParam.departmentId" :request-api="getRoleListApi" label="authName" multiple title="权限树🌲"
+          @change="changeTreeFilter" />
       </template>
     </MDrawer>
   </div>

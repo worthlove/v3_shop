@@ -25,6 +25,9 @@
     "types": [
       "node"
     ],
+    "typeRoots": [
+      "node_modules/@types"
+    ],
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
