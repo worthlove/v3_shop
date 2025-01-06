@@ -43,5 +43,5 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-@import "@/components/errorMessage/index.scss";
+@use "@/components/errorMessage/index.scss";
 </style>

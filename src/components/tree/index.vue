@@ -4,10 +4,10 @@
       {{ title }}
     </h4>
     <div class="search">
-      <el-input v-model="filterText" clearable placeholder="输入关键字进行过滤"/>
+      <el-input v-model="filterText" clearable placeholder="输入关键字进行过滤" />
       <el-dropdown trigger="click">
         <el-icon size="20">
-          <More/>
+          <More />
         </el-icon>
         <template #dropdown>
           <el-dropdown-menu>
@@ -18,23 +18,11 @@
       </el-dropdown>
     </div>
     <el-scrollbar :style="{ height: title ? `calc(100% - 95px)` : `calc(100% - 56px)` }">
-      <el-tree
-          ref="treeRef"
-          :check-on-click-node="multiple"
-          :check-strictly="false"
-          :current-node-key="!multiple ? selected : ''"
-          :data="multiple ? treeData : treeAllData"
-          :default-checked-keys="multiple ? selected : []"
-          :expand-on-click-node="false"
-          :filter-node-method="filterNode"
-          :highlight-current="!multiple"
-          :node-key="id"
-          :props="defaultProps"
-          :show-checkbox="multiple"
-          default-expand-all
-          @check="handleCheckChange"
-          @node-click="handleNodeClick"
-      >
+      <el-tree ref="treeRef" :check-on-click-node="multiple" :check-strictly="false"
+        :current-node-key="!multiple ? selected : ''" :data="multiple ? treeData : treeAllData"
+        :default-checked-keys="multiple ? selected : []" :expand-on-click-node="false" :filter-node-method="filterNode"
+        :highlight-current="!multiple" :node-key="id" :props="defaultProps" :show-checkbox="multiple" default-expand-all
+        @check="handleCheckChange" @node-click="handleNodeClick">
         <template #default="scope">
           <span class="el-tree-node__label">
             <slot :row="scope">
@@ -120,6 +108,7 @@ watch(filterText, val => {
 // 过滤
 const filterNode = (value: string, data: { [key: string]: any }, node: any) => {
   if (!value) return true;
+  console.log(value, data, node);
   let parentNode = node.parent,
       labels = [node.label],
       level = 1;
@@ -200,7 +189,7 @@ defineExpose({treeData, treeAllData, treeRef});
     }
 
     :deep(.el-tree--highlight-current) {
-      .el-tree-node.is-current > .el-tree-node__content {
+      .el-tree-node.is-current>.el-tree-node__content {
         background-color: var(--el-color-primary);
 
         .el-tree-node__label,

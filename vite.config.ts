@@ -44,6 +44,36 @@ export default defineConfig({
       },
     }),
   ],
+  build:{
+    outDir: 'v3_shop',
+    minify: "terser",
+    terserOptions: {
+      compress: {
+        // warnings: false,
+        drop_console: true, // build时移除console
+        drop_debugger: true, // build时移除console
+        pure_funcs: ['console.log'] // build时移除console.log
+      },
+      output: {
+        // 去掉注释内容
+        comments: true,
+      },
+    },
+    // 自定义底层的 Rollup 打包配置
+    rollupOptions: {
+      output: {
+        // 最小化拆分包
+        manualChunks: (id) => {
+          if (id.includes('node_modules')) {
+            return id.toString().split('node_modules/')[1].split('/')[0].toString();
+          }
+        },
+        chunkFileNames: 'static/js/[name]-[hash].js',
+        entryFileNames: 'static/js/[name]-[hash].js',
+        assetFileNames: 'static/[ext]/[name]-[hash].[ext]',
+      },
+    },
+  },
   optimizeDeps: {
     exclude: ['@vue/shared'],
   },

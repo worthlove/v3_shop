@@ -16,13 +16,12 @@
             <el-col :span="12">
               <el-input v-model="queryInfo.query" clearable placeholder="请输入搜索内容" @clear='getUserListFn'>
                 <template #append>
-                  <el-button :icon="Search" @click="queryFn"/>
+                  <el-button icon="Search" @click="queryFn" />
                 </template>
               </el-input>
             </el-col>
             <el-col :span="4">
-              <el-tooltip class="box-item" content="点击此按钮,弹出页面进行用户添加" effect="dark"
-                          placement="right-start">
+              <el-tooltip class="box-item" content="点击此按钮,弹出页面进行用户添加" effect="dark" placement="right-start">
                 <el-button plain type="primary" @click="addUserInfoFn">添加用户</el-button>
               </el-tooltip>
             </el-col>
@@ -36,17 +35,17 @@
       </el-card>
       <el-card>
         <MTable ref="elTablesRef" :index-method="indexMethods" :labelList="TableLabel" :resizeable=true
-                :tableData="tableData" border class="elTables" style="height: 25.626rem" tableSize="small"
-                @multipleSelectChange="multipleSelectChangeFn">
+          :tableData="tableData" border class="elTables" style="height: 25.626rem" tableSize="small"
+          @multipleSelectChange="multipleSelectChangeFn">
         </MTable>
         <el-pagination :current-page="queryInfo.pagenum" :page-size="queryInfo.pagesize" :page-sizes="[1, 5, 10, 15]"
-                       :total="total" background layout="->, total,sizes, prev, pager, next, jumper" size="small"
-                       style="margin-top: 1rem;" @size-change="handleSizeChangeFn"
-                       @current-change="handleCurrentChangeFn"></el-pagination>
+          :total="total" background layout="->, total,sizes, prev, pager, next, jumper" size="small"
+          style="margin-top: 1rem;" @size-change="handleSizeChangeFn"
+          @current-change="handleCurrentChangeFn"></el-pagination>
       </el-card>
     </el-card>
     <MDrawer ref="drawerRef" :title="DrawerTitle" conText="确认" conText1="取消" direction="rtl" size="40%"
-             @cancel="cancelFn" @submit="submitFn">
+      @cancel="cancelFn" @submit="submitFn">
       <template #DrawerBody>
         <!-- 新增用户所需表单 -->
         <el-form v-if="isAddMode === 1" ref='ruleFormRef' :model='addFromData' :rules='addFromRules' label-width='70px'>
@@ -64,7 +63,7 @@
           </el-form-item>
         </el-form>
         <el-form v-if="isAddMode === 2" ref='editFormRef' :model='editFromData' :rules="editFromRules"
-                 label-width='70px'>
+          label-width='70px'>
           <el-form-item label='用户名'>
             <el-input v-model='editFromData.username' disabled></el-input>
           </el-form-item>
@@ -96,7 +95,7 @@
 
 <script lang="tsx" setup>
 // 导入图标、组件、工具函数、样式、请求接口
-import {Search, Edit, Delete, Setting} from '@element-plus/icons-vue'
+import { Edit, Delete, Setting} from '@element-plus/icons-vue'
 import MTable from "@/components/table/m-table/mTable.vue";
 import MDrawer from '@/components/drawer/mDrawer.vue'
 import {validateEMail, validatePhone} from '@/utils/checkReg.js'

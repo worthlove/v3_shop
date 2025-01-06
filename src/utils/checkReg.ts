@@ -61,6 +61,8 @@ export function isArray(arg:any): boolean {
  * 校验邮箱
  */
 export function validateEMail(rule:any, value:any, callback:any): void{
+  console.log(rule, value, callback);
+  
   const reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/
   if (!value) {
     callback(new Error("邮箱不能为空"))
@@ -81,6 +83,7 @@ export function validateEMail(rule:any, value:any, callback:any): void{
  * 手机号
  */
 export function validatePhone(rule: any, value: string, callback:any) {
+  console.log(rule, value, callback);
   const reg =
     /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/
   if (!value) {
@@ -100,6 +103,7 @@ export function validatePhone(rule: any, value: string, callback:any) {
  * 固定电话
  */
 export function validateTelPhone(rule: any, value: string, callback: any) {
+  console.log(rule, value, callback);
   const reg = /0\d{2,3}-\d{7,8}/
   if (!value) {
     callback(new Error("固定电话不能为空"))
@@ -118,6 +122,7 @@ export function validateTelPhone(rule: any, value: string, callback: any) {
  * 身份证
  */
 export function validateIdNo(rule: any, value: string | null | undefined, callback: any) {
+  console.log(rule, value, callback);
   const reg =
     /^\d{6}((((((19|20)\d{2})(0[13-9]|1[012])(0[1-9]|[12]\d|30))|(((19|20)\d{2})(0[13578]|1[02])31)|((19|20)\d{2})02(0[1-9]|1\d|2[0-8])|((((19|20)([13579][26]|[2468][048]|0[48]))|(2000))0229))\d{3})|((((\d{2})(0[13-9]|1[012])(0[1-9]|[12]\d|30))|((\d{2})(0[13578]|1[02])31)|((\d{2})02(0[1-9]|1\d|2[0-8]))|(([13579][26]|[2468][048]|0[048])0229))\d{2}))(\d|X|x)$/
   if (value === "" || value === undefined || value == null) {
@@ -137,6 +142,7 @@ export function validateIdNo(rule: any, value: string | null | undefined, callba
  * 正整数
  */
 export function validateInteger(rule: any, value: string | null | undefined, callback: any) {
+  console.log(rule, value, callback);
   const reg = /^\+?[1-9]\d*$/
   if (value === "" || value === undefined || value == null) {
     callback()
@@ -155,6 +161,7 @@ export function validateInteger(rule: any, value: string | null | undefined, cal
  * 小写字母
  */
 export function validateLowerCase(rule: any, value: string | null | undefined, callback: any) {
+  console.log(rule, value, callback);
   const reg = /^[a-z]+$/
   if (value === "" || value === undefined || value == null) {
     callback()
@@ -173,6 +180,7 @@ export function validateLowerCase(rule: any, value: string | null | undefined, c
  * 大写字母
  */
 export function validateUpperCase(rule: any, value: string | null | undefined, callback: any) {
+  console.log(rule, value, callback);
   const reg = /^[A-Z]+$/
   if (value === "" || value === undefined || value == null) {
     callback()
@@ -191,6 +199,7 @@ export function validateUpperCase(rule: any, value: string | null | undefined, c
  * 数字字母下划线
  */
 export function validateBaseData(rule: any, value: string | null | undefined, callback: any) {
+  console.log(rule, value, callback);
   const reg = /^[a-zA-Z0-9_]{4,16}$/
   if (value === "" || value === undefined || value == null) {
     callback()
@@ -209,6 +218,7 @@ export function validateBaseData(rule: any, value: string | null | undefined, ca
  * url
  */
 export function validateUrl(rule: any, value: string | null | undefined, callback: any) {
+  console.log(rule, value, callback);
   const reg =
     /^(((ht|f)tps?):\/\/)?[\w-]+(\.[\w-]+)+([\w.,@?^=%&:/~+#-\(\)]*[\w@?^=%&/~+#-\(\)])?$/
   if (value === "" || value === undefined || value == null) {
@@ -228,6 +238,7 @@ export function validateUrl(rule: any, value: string | null | undefined, callbac
  * 密码  （最少六位，包含一个大写字母，一个小写字母，一个数字，一个字符1）
  */
 export function validatePass(rule: any, value: string | null | undefined, callback: any) {
+  console.log(rule, value, callback);
   const reg =
     /^\S*(?=\S{6,})(?=\S*\d)(?=\S*[A-Z])(?=\S*[a-z])(?=\S*[!@#$%^&*? ])\S*$/
   if (value === "" || value === undefined || value == null) {
@@ -247,6 +258,7 @@ export function validatePass(rule: any, value: string | null | undefined, callba
  * 只能输入中文
  */
 export function validateHan(rule: any, value: string | null | undefined, callback: any) {
+  console.log(rule, value, callback);
   const reg = /^[\u4e00-\u9fa5·]{2,16}$/
   if (value === "" || value === undefined || value == null) {
     callback()
@@ -265,6 +277,7 @@ export function validateHan(rule: any, value: string | null | undefined, callbac
  * IPv4
  */
 export function validateIPv4(rule: any, value: string | null | undefined, callback: any) {
+  console.log(rule, value, callback);
   const reg =
     /^((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])(?::(?:[0-9]|[1-9][0-9]{1,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5]))?$/
   if (value === "" || value === undefined || value == null) {
@@ -284,6 +297,7 @@ export function validateIPv4(rule: any, value: string | null | undefined, callba
  * IP地址
  */
 export function CheckIp(rule: any, value: string, callback: any) {
+  console.log(rule, value, callback);
   const reg =
     /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/
   if (!reg.test(value) && value !== "") {
@@ -299,6 +313,7 @@ export function CheckIp(rule: any, value: string, callback: any) {
  * IPv6
  */
 export function validateIPv6(rule: any, value: string | null | undefined, callback: any) {
+  console.log(rule, value, callback);
   const reg =
     /^(?:(?:[0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4}|(([0-9A-Fa-f]{1,4}:){6}:[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){5}:([0-9A-Fa-f]{1,4}:)?[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){4}:([0-9A-Fa-f]{1,4}:){0,2}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){3}:([0-9A-Fa-f]{1,4}:){0,3}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){2}:([0-9A-Fa-f]{1,4}:){0,4}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|(([0-9A-Fa-f]{1,4}:){0,5}:((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|(::([0-9A-Fa-f]{1,4}:){0,5}((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|([0-9A-Fa-f]{1,4}::([0-9A-Fa-f]{1,4}:){0,5}[0-9A-Fa-f]{1,4})|(::([0-9A-Fa-f]{1,4}:){0,6}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){1,7}:))|\[(?:(?:[0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4}|(([0-9A-Fa-f]{1,4}:){6}:[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){5}:([0-9A-Fa-f]{1,4}:)?[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){4}:([0-9A-Fa-f]{1,4}:){0,2}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){3}:([0-9A-Fa-f]{1,4}:){0,3}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){2}:([0-9A-Fa-f]{1,4}:){0,4}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|(([0-9A-Fa-f]{1,4}:){0,5}:((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|(::([0-9A-Fa-f]{1,4}:){0,5}((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|([0-9A-Fa-f]{1,4}::([0-9A-Fa-f]{1,4}:){0,5}[0-9A-Fa-f]{1,4})|(::([0-9A-Fa-f]{1,4}:){0,6}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){1,7}:))](?::(?:[0-9]|[1-9][0-9]{1,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5]))?$/i
   if (value === "" || value === undefined || value == null) {
@@ -318,6 +333,7 @@ export function validateIPv6(rule: any, value: string | null | undefined, callba
  * MAC
  */
 export function validateMAC(rule: any, value: string | null | undefined, callback: any) {
+  console.log(rule, value, callback);
   const reg =
     /[A-Fa-f0-9]{2}:[A-Fa-f0-9]{2}:[A-Fa-f0-9]{2}:[A-Fa-f0-9]{2}:[A-Fa-f0-9]{2}:[A-Fa-f0-9]{2}/
   if (value === "" || value === undefined || value == null) {
@@ -337,6 +353,7 @@ export function validateMAC(rule: any, value: string | null | undefined, callbac
  * 数字
  */
 export function validDateNum(rule: any, value: string | null | undefined, callback: any) {
+  console.log(rule, value, callback);
   const reg = /^-?\d*\.?\d+$/
   if (value === "" || value === undefined || value == null) {
     callback()
@@ -355,6 +372,7 @@ export function validDateNum(rule: any, value: string | null | undefined, callba
  *  验证域名网址
  */
 export function CheckWebsite(rule: any, value: string, callback: any) {
+  console.log(rule, value, callback);
   const reg =
     /(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/
   if (!reg.test(value) && value !== "") {
@@ -378,7 +396,9 @@ export const isValidTime = function (startTime: string | number | Date, endTime:
  * @param phone
  */
 export const phoneDesensitizationTreatment = (phone: string) => {
+  console.log(phone);
   return phone.replace(/(\d{3})(\d{4})(\d{4})/, (str: any, $1: string, $2: any, $3: string) => {
+    console.log(str,$1, $2, $3);
     return $1 + "****" + $3
   })
 }

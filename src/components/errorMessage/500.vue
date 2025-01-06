@@ -1,6 +1,6 @@
 <template>
   <div class="not-container">
-    <img alt="500" class="not-img" src="@/assets/images/500.png"/>
+    <img alt="500" class="not-img" src="@/assets/images/500.png" />
     <div class="not-detail">
       <h2>500</h2>
       <h4>抱歉，您的网络不见了~🤦‍♂️🤦‍♀️</h4>
@@ -14,5 +14,5 @@ const router = useRouter();
 </script>
 
 <style lang="scss" scoped>
-@import "@/components/errorMessage/index.scss";
+@use "@/components/errorMessage/index.scss";
 </style>

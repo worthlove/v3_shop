@@ -86,3 +86,13 @@ export function getRoleListApi() {
     url: `/rights/tree`,
   })
 }
+
+export function addRoleAuthApi(roleId: any, right: any) {
+  return request({
+    method: 'POST',
+    url: `/roles/${roleId.value}/rights`,
+    data: {
+      rids: right
+    }
+  })
+}

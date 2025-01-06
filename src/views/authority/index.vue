@@ -14,7 +14,8 @@
         <el-form>
           <el-row :gutter="20">
             <el-col :span="4">
-              <el-tooltip class="box-item" content="点击此按钮,弹出页面进行角色添加" effect="dark" placement="right-start">
+              <el-tooltip class="box-item" content="点击此按钮,弹出页面进行角色添加" effect="dark"
+                          placement="right-start">
                 <el-button plain type="primary" @click="addRoleFn">添加角色</el-button>
               </el-tooltip>
             </el-col>
@@ -23,12 +24,13 @@
       </el-card>
       <el-card>
         <MTable ref="elTablesRef" :index-method="indexMethods" :labelList="TableLabel" :resizeable=true
-          :tableData="tableData" border class="elTables" size="default" style="height: 28.626rem" tableSize="small">
+                :tableData="tableData" border class="elTables" size="default" style="height: 33rem"
+                tableSize="small">
         </MTable>
       </el-card>
     </el-card>
     <MDrawer ref="drawerRef" :title="DrawerTitle" conText="确认" conText1="取消" direction="rtl" size="40%"
-      @cancel="cancelFn" @submit="submitFn">
+             @cancel="cancelFn" @submit="submitFn">
       <template #DrawerBody>
         <!-- 新增用户所需表单 -->
         <el-form v-if="isAddMode === 1" ref='ruleFormRef' :model='addFromData' :rules='addFromRules' label-width='90px'>
@@ -41,7 +43,7 @@
           </el-form-item>
         </el-form>
         <el-form v-if="isAddMode === 2" ref='EditFormRef' :model='editFromData' :rules='editFromRules'
-          label-width='90px'>
+                 label-width='90px'>
           <el-form-item label='角色名称' prop='roleName'>
             <el-input v-model='editFromData.roleName'></el-input>
           </el-form-item>
@@ -50,14 +52,16 @@
           </el-form-item>
         </el-form>
         <TreeFilter v-if="isAddMode === 3" ref="treeFilterRef" :data="treeFilterData"
-          :default-value="initParam.departmentId" :request-api="getRoleListApi" label="authName" multiple title="权限树🌲"
-          @change="changeTreeFilter" />
+                    :default-value="initParam.departmentId" :request-api="getRoleListApi" label="authName" multiple
+                    title="权限树🌲"
+                    @change="changeTreeFilter"/>
       </template>
     </MDrawer>
   </div>
 </template>
 
 <script lang="tsx" setup>
+import {RouteLocationRaw} from 'vue-router';
 import {ElButton, ElRow, ElCol, ElTag, ElMessageBox, ElNotification, ElForm} from 'element-plus';
 import {Edit, Delete, Setting, CaretRight} from '@element-plus/icons-vue'
 import MTable from "@/components/table/m-table/mTable.vue";
@@ -68,13 +72,13 @@ import {
   updateRoleApi,
   deleteRoleApi,
   deleteRoleAuthApi,
-  getRoleListApi
+  getRoleListApi,
+  addRoleAuthApi
 } from "@/api/authorityApi/index.ts";
 import TreeFilter from "@/components/tree/index.vue";
-import {RouteLocationRaw} from 'vue-router';
 
-const homeRoute: RouteLocationRaw = {path: '/home'};
-const rightsRoute: RouteLocationRaw = {path: '/roles'};
+const homeRoute: RouteLocationRaw = ({path: '/home'});
+const rightsRoute: RouteLocationRaw = ({path: '/roles'});
 
 // 获取默认选中的tree数据
 const initParam = reactive({departmentId: []});
@@ -131,6 +135,9 @@ const editFromRules = ref({
     {required: true, message: '请输入角色名称', trigger: 'blur'}
   ]
 })
+
+// 当前行角色ID
+const roleId = ref('')
 
 // 表格表头标签
 const TableLabel = [
@@ -302,6 +309,7 @@ const deleteFn = (row: any) => {
 // 权限分配
 const authorityFn = (row: any) => {
   console.log('authorityFn', row)
+  roleId.value = row.id
   isAddMode.value = 3
   DrawerTitle.value = '角色分配'
   // 获取权限树的默认选中的id
@@ -375,6 +383,24 @@ const submitFn = () => {
     });
   } else if (isAddMode.value === 3) {
     console.log('角色分配')
+    if (treeFilterRef.value && treeFilterRef.value.treeRef) {
+      const checkedKeys = [...treeFilterRef.value.treeRef.getCheckedKeys(), ...treeFilterRef.value.treeRef.getHalfCheckedKeys()];
+      const keysId = checkedKeys.join(',')
+      addRoleAuthApi(roleId, keysId).then((res: any) => {
+        if (res.meta.status !== 200) {
+          ElNotification.error('角色分配失败')
+        } else {
+          ElNotification.success('角色分配成功')
+          drawerRef.value?.close()
+        }
+        getRolesFn('')
+      })
+
+    } else {
+      ElNotification.error('角色分配失败')
+      return;
+    }
+
   }
 }
 // 取消

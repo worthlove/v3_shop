@@ -1,4 +1,8 @@
-import {Menu} from "@element-plus/icons-vue";
+export type FieldNamesProps = {
+  label: string;
+  value: string;
+  children?: string;
+};
 
 /**
  * @description:  是否为数组
@@ -7,9 +11,7 @@ export function isArray(val: any): val is Array<any> {
   return val && Array.isArray(val);
 }
 
-import {FieldNamesProps} from "../components/table/ProTable/interface/index.ts";
-
-const mode = import.meta.env.VITE_ROUTER_MODE;
+const mode = import.meta.env.VITE_ROUTER_MODE as 'hash' | 'history';
 
 /**
  * @description 获取localStorage
@@ -132,7 +134,7 @@ export function getTimeState() {
  * @returns {String}
  */
 export function getBrowserLang() {
-  let browserLang = navigator.language ? navigator.language : navigator.browserLanguage;
+  let browserLang = navigator.language
   let defaultBrowserLang = "";
   if (["cn", "zh", "zh-cn"].includes(browserLang.toLowerCase())) {
     defaultBrowserLang = "zh";
@@ -159,9 +161,21 @@ export function getUrlWithParams() {
  * @param {Array} menuList 菜单列表
  * @returns {Array}
  */
-export function getFlatMenuList(menuList: Menu.MenuOptions[]): Menu.MenuOptions[] {
-  let newMenuList: Menu.MenuOptions[] = JSON.parse(JSON.stringify(menuList));
-  return newMenuList.flatMap(item => [item, ...(item.children ? getFlatMenuList(item.children) : [])]);
+namespace Menu {
+  export interface MenuOptions {
+    // 定义 MenuOptions 的属性
+    path: string;
+    name: string;
+    meta?: {
+      title: string;
+      icon?: string;
+      isHide?: boolean;
+      isFull?: boolean;
+      isAffix?: boolean;
+      isKeepAlive?: boolean;
+    };
+    children?: MenuOptions[];
+  }
 }
 
 /**
@@ -171,7 +185,7 @@ export function getFlatMenuList(menuList: Menu.MenuOptions[]): Menu.MenuOptions[
  * */
 export function getShowMenuList(menuList: Menu.MenuOptions[]) {
   let newMenuList: Menu.MenuOptions[] = JSON.parse(JSON.stringify(menuList));
-  return newMenuList.filter(item => {
+  return newMenuList.filter((item:Menu.MenuOptions) => {
     item.children?.length && (item.children = getShowMenuList(item.children));
     return !item.meta?.isHide;
   });
@@ -232,8 +246,11 @@ export function findMenuByPath(menuList: Menu.MenuOptions[], path: string): Menu
  * @returns {Array}
  * */
 export function getKeepAliveRouterName(menuList: Menu.MenuOptions[], keepAliveNameArr: string[] = []) {
-  menuList.forEach(item => {
-    item.meta.isKeepAlive && item.name && keepAliveNameArr.push(item.name);
+  menuList.forEach((item:Menu.MenuOptions) => {
+    // 检查 item.meta 是否存在
+    if (item.meta && item.meta.isKeepAlive && item.name) {
+      keepAliveNameArr.push(item.name);
+    }
     item.children?.length && getKeepAliveRouterName(item.children, keepAliveNameArr);
   });
   return keepAliveNameArr;
@@ -247,6 +264,8 @@ export function getKeepAliveRouterName(menuList: Menu.MenuOptions[], keepAliveNa
  * @returns {String}
  * */
 export function formatTableColumn(row: number, col: number, callValue: any) {
+  console.log(row, col, callValue);
+  
   // 如果当前值为数组，使用 / 拼接（根据需求自定义）
   if (isArray(callValue)) return callValue.length ? callValue.join(" / ") : "--";
   return callValue ?? "--";

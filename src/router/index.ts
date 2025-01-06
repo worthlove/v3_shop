@@ -77,6 +77,16 @@ const routes: ReadonlyArray<RouteRecordRaw> = [
         meta: {title: '角色列表'},
         component: () => import('@/views/authority/index.vue')
       },
+      {
+        path: '/rights',
+        meta: {title: '权限列表'},
+        component: () => import('@/views/rights/index.vue')
+      },
+      {
+        path: '/goods',
+        meta: {title: '商品列表'},
+        component: () => import('@/views/goods/index.vue')
+      }
       // ...errorRouter
     ] // 添加 children 属性，即使它现在是空的
   },
@@ -118,12 +128,14 @@ router.beforeEach((to, from, next) => {
     if (!userInfoStore.token) {
       return next('/login')
     } else {
+      const list:any = routes;
 
 // 使用 Array.map() 方法提取 routes 数组中每个 RouteRecordRaw 对象的 children 数组中的 path 属性
       const childrenPathArray: string[] = routes.map(route => route.path)
 
 // 使用 Array.map() 方法提取 /home 路由的 children 数组中的 path 属性
-      const homeChildrenPaths: string[] = routes.find(route => route.path === '/home')?.children.map(child => child.path) || [];
+
+      const homeChildrenPaths: string[] = list.find((route: RouteRecordRaw) => route.path === '/home')?.children.map((child:RouteRecordRaw) => child.path) ?? [];
 
 // 打印 homeChildrenPaths 数组，查看提取的 path 值
       console.log(homeChildrenPaths, 'homeChildrenPaths');
