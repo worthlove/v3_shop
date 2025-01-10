@@ -1,6 +1,6 @@
 <template>
   <el-table ref="'tableRef'+condition.TableIndex" :data="tableData" :header-cell-style="{
-      background: '#f5f7fa',color: '#303133','text-align': 'center'}" :resizeable="resizeable" :size="tableSize" border
+      background: '#f5f7fa',color: '#303133','text-align': 'center'}" :resizeable="resizable" :size="tableSize" border
     fit header-algin="center" height="100%" highlight-current-row tooltip-effect="dark" width="100%"
     @select="handleSelect" @selection-change="handleSelectionChange" @sort-change="handleSortChange"
     @cell-click="handleCellClick">
@@ -135,7 +135,7 @@ export default defineComponent({
      * @default false
      * @type {boolean}
      */
-    resizeable: {
+     resizable: {
       type: Boolean,
       default: false,
     },

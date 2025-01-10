@@ -6,7 +6,7 @@
     </el-breadcrumb>
     <el-card class="scroll-card">
       <el-card>
-        <MTable ref="elTableRef" :index-method="indexMethods" :label-list="TableLabel" :resizeable=false
+        <MTable ref="elTableRef" :index-method="indexMethods" :label-list="TableLabel" :resizable=false
           :table-data="tableData" border class="elTables" size="default" style="height: 38.626rem" table-size="small">
         </MTable>
       </el-card>

@@ -83,7 +83,7 @@
           </el-form-item>
           <el-form-item label='角色分配'>
             <el-select v-model='selectedRolesId' placeholder='请选择角色分配' style='width: 100%'>
-              <el-option v-for='(item) in roleseList' :key='item.id' :label='item.roleName' :value='item.id'>
+              <el-option v-for='(item) in roleList' :key='item.id' :label='item.roleName' :value='item.id'>
               </el-option>
             </el-select>
           </el-form-item>
@@ -182,7 +182,7 @@ const userInfo = ref({
 })
 
 // 获取用户信息
-const roleseList = ref<{ id: number; roleName: string }[]>([])
+const ro le = ref<{ id: number; roleName: string }[]>([])
 
 // 选中的角色ID
 const selectedRolesId = ref('')
@@ -622,7 +622,7 @@ const settingFn = (row: any) => {
   console.log('settingFn', row);
   DrawerTitle.value = '分配角色'
   isAddMode.value = 3
-  getuserRoleFn()
+  getUserRoleFn()
   userInfo.value = row
   drawerRef.value?.open()
 }
@@ -630,10 +630,10 @@ const settingFn = (row: any) => {
  * 获取用户的角色列表
  * @returns {void}
  */
-const getuserRoleFn = () => {
+const getUserRoleFn = () => {
   getUserRoleApi().then(res => {
     if ((res as any).meta.status === 200) {
-      roleseList.value = res.data
+      roleList.value = res.data
     } else {
       ElNotification.error((res as any).meta.msg)
     }
