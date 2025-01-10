@@ -9,7 +9,7 @@
       <el-header class="header">
         <!-- 头像 -->
         <div>
-          <img alt='头像' src='@/assets/images/1.gif' />
+          <img alt='头像' src='@/assets/images/1.gif'/>
         </div>
         <!-- 标题 -->
         <div>
@@ -24,15 +24,16 @@
         <el-aside :width="isCollapse? '64px' : '200px'">
           <div class='toggleBtn' @click='toggleBtn'>|||</div>
           <el-menu :collapse="isCollapse" :collapse-transition='false' :default-active='activePath' :router='true'
-            :unique-opened='true' active-text-color='#409eff' background-color='#545c64' class="el-menu-vertical-demo"
-            text-color='#fff'>
+                   :unique-opened='true' active-text-color='#409eff' background-color='#545c64'
+                   class="el-menu-vertical-demo"
+                   text-color='#fff'>
             <el-sub-menu v-for='item in menuList' :key='item.id' :index="item.id.toString()">
               <template #title>
                 <i :class="iconsObj[item.id]"></i>&nbsp;
                 <span>{{ item.authName }}</span>
               </template>
               <el-menu-item v-for='subItem in item.children' :key='subItem.id' :index="'/' + subItem.path"
-                @click="saveNavStatusFn('/' + subItem.path)">
+                            @click="saveNavStatusFn('/' + subItem.path)">
                 <template #title>
                   <i :class='iconsObj[item.id]'></i>&nbsp;
                   <span>{{ subItem.authName }}</span>
@@ -107,8 +108,11 @@ const getMenuList = () => {
 }
 
 onMounted(() => {
+  const storedPath = window.sessionStorage.getItem('activePath');
+  if (storedPath !== null) {
+    activePath.value = storedPath;
+  }
   getMenuList();
-  // activePath = window.sessionStorage.getItem('activePath')
 });
 
 const changeTheme = (activeState: boolean) => {
@@ -133,12 +137,12 @@ const changeTheme = (activeState: boolean) => {
   font-size: 30px;
   font-weight: bold;
 
-  >div {
+  > div {
     height: 100%;
     display: flex;
     align-items: center;
 
-    >img {
+    > img {
       width: 100%;
       height: 100%;
       border: 1px solid #eee;
@@ -147,7 +151,7 @@ const changeTheme = (activeState: boolean) => {
       box-shadow: 0 0 5px #ddd;
     }
 
-    >span {
+    > span {
       // 渐变色字体
       background-image: linear-gradient(to bottom right, #2de2ff, #8b67fb);
       background-clip: text;
@@ -156,7 +160,7 @@ const changeTheme = (activeState: boolean) => {
     }
   }
 
-  >span {
+  > span {
     margin-left: 15px;
   }
 }
