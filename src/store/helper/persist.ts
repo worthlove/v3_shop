@@ -1,5 +1,10 @@
 // 导入 Pinia 持久化状态插件的选项类型
-import { PersistedStateOptions } from "pinia-plugin-persistedstate";
+import { PersistenceOptions } from "pinia-plugin-persistedstate";
+
+interface CustomPersistenceOptions extends PersistenceOptions {
+  paths?: string[];
+}
+
 
 /**
  * @description pinia 持久化参数配置
@@ -9,12 +14,12 @@ import { PersistedStateOptions } from "pinia-plugin-persistedstate";
  * @return persist
  * */
 const piniaPersistConfig = (key: string, paths?: string[], useSessionStorage = false) => {
-  // 创建一个 PersistedStateOptions 对象
-  const persist: PersistedStateOptions = {
+  // 创建一个 PersistenceOptions 对象
+  const persist: CustomPersistenceOptions = {
     // 设置存储的键名
     key,
     // 根据 useSessionStorage 参数决定使用哪种存储方式
-    storage: useSessionStorage? sessionStorage : localStorage,
+    storage: useSessionStorage ? sessionStorage : localStorage,
     // 设置需要持久化的状态路径
     paths
   };
